@@ -8,26 +8,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; background-color: #fcfcfc; color: #1a1a1a; }
         .gradient-text {
-            background: linear-gradient(to right, #22c55e, #3b82f6);
+            background: linear-gradient(to right, #16a34a, #2563eb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
+          width: 5px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 10px;
+          background: #f1f5f9;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.1);
+          background: #cbd5e1;
           border-radius: 10px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #22c55e;
+          background: #16a34a;
         }
 
         ::-webkit-scrollbar {
@@ -41,20 +40,17 @@
           border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: #cbd5e1;
+          background: #16a34a;
         }
 
         .glass-nav {
-          background: rgba(255, 255, 255, 0.75);
-          backdrop-filter: blur(50px) saturate(200%);
+          background: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(20px);
           border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
 
-        .glass-dark {
-          background: rgba(17, 17, 17, 0.85);
-          backdrop-filter: blur(40px) saturate(150%);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+        .card-shadow {
+          box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
         }
 
         @keyframes subtle-float {
@@ -78,7 +74,7 @@
 }
 </script>
 </head>
-<body class="bg-gray-50 text-gray-900 overflow-x-hidden selection:bg-green-500 selection:text-white m-0 p-0">
+<body class="bg-[#fcfcfc] text-gray-900 overflow-x-hidden selection:bg-green-600 selection:text-white m-0 p-0">
     <div id="root"></div>
 </body>
 </html>

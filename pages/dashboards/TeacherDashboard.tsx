@@ -4,7 +4,7 @@ import {
   Book, PenTool, Layout, Users, FileText, Star, 
   Search, Bell, Plus, ChevronRight, MessageSquare, StarHalf, Monitor, BookOpen, UserCheck,
   Filter, ArrowUpRight, GraduationCap, Clock, MoreHorizontal, X, Phone, Mail, User, ShieldCheck,
-  Activity, Calendar, BarChart3, Clipboard, UploadCloud, CheckCircle, Save
+  Activity, Calendar, BarChart3, Clipboard, UploadCloud, CheckCircle, Save, FolderOpen, Send, Sparkles, Trash2
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, AreaChart, Area, LineChart, Line
@@ -33,6 +33,7 @@ interface Lesson {
   time: string;
   class: string;
   status: 'Draft' | 'Ready' | 'Reviewing';
+  description?: string;
 }
 
 const TeacherDashboard: React.FC = () => {
@@ -44,16 +45,17 @@ const TeacherDashboard: React.FC = () => {
   
   // Lesson Planner state
   const [lessons, setLessons] = useState<Lesson[]>([
-    { id: '1', title: 'React State Management', time: 'Tomorrow, 08:30', class: 'SOD 5C', status: 'Draft' },
-    { id: '2', title: 'Database Normalization', time: 'Wednesday, 10:45', class: 'SOD 4B', status: 'Ready' },
-    { id: '3', title: 'UI UX Prototyping', time: 'Friday, 14:00', class: 'SOD 3A', status: 'Reviewing' }
+    { id: '1', title: 'React State Management', time: 'Tomorrow, 08:30', class: 'SOD 5C', status: 'Draft', description: 'Covering Redux and Context API.' },
+    { id: '2', title: 'Database Normalization', time: 'Wednesday, 10:45', class: 'SOD 4B', status: 'Ready', description: '1NF, 2NF, 3NF practical examples.' },
+    { id: '3', title: 'UI UX Prototyping', time: 'Friday, 14:00', class: 'SOD 3A', status: 'Reviewing', description: 'Figma to Code workflow.' }
   ]);
 
   const [newLesson, setNewLesson] = useState<Partial<Lesson>>({
     title: '',
     time: '',
     class: 'SOD 5C',
-    status: 'Draft'
+    status: 'Draft',
+    description: ''
   });
 
   const handleAddLesson = (e: React.FormEvent) => {
@@ -64,11 +66,16 @@ const TeacherDashboard: React.FC = () => {
       title: newLesson.title,
       time: newLesson.time,
       class: newLesson.class || 'SOD 5C',
-      status: (newLesson.status as any) || 'Draft'
+      status: (newLesson.status as any) || 'Draft',
+      description: newLesson.description
     };
     setLessons([lesson, ...lessons]);
     setIsLessonModalOpen(false);
-    setNewLesson({ title: '', time: '', class: 'SOD 5C', status: 'Draft' });
+    setNewLesson({ title: '', time: '', class: 'SOD 5C', status: 'Draft', description: '' });
+  };
+
+  const removeLesson = (id: string) => {
+    setLessons(lessons.filter(l => l.id !== id));
   };
   
   const classStats = [
@@ -125,10 +132,10 @@ const TeacherDashboard: React.FC = () => {
       <header className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-10">
         <div className="space-y-2">
           <div className="flex items-center space-x-4">
-            <div className="p-4 bg-white shadow-xl border border-gray-100 rounded-[1.5rem]"><Book className="text-gray-950" /></div>
-            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">Classroom Portal</h1>
+            <div className="p-4 bg-white shadow-xl border border-gray-100 rounded-[1.5rem]"><Monitor className="text-gray-950" /></div>
+            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">Teacher Portal</h1>
           </div>
-          <p className="text-gray-400 font-medium ml-16">Mwarimu - My Classes & Students</p>
+          <p className="text-gray-400 font-medium ml-16">Portal ya Mwarimu - Gucunga Amasomo n'Abanyeshuri</p>
         </div>
         <div className="flex items-center space-x-4">
           <button 
@@ -136,7 +143,7 @@ const TeacherDashboard: React.FC = () => {
             className="flex items-center space-x-3 px-8 py-4 bg-gray-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-500 transition-all shadow-xl"
           >
              <UploadCloud size={18} />
-             <span>Injiza Amanota (Grades)</span>
+             <span>Injiza Amanota</span>
           </button>
           <button 
             onClick={() => setIsLessonModalOpen(true)}
@@ -150,7 +157,7 @@ const TeacherDashboard: React.FC = () => {
       {/* Lesson Creation Modal */}
       {isLessonModalOpen && (
         <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-md animate-in fade-in duration-300">
-           <div className="bg-white w-full max-w-xl rounded-[3rem] p-10 shadow-2xl space-y-8 animate-in slide-in-from-top-12 duration-500">
+           <div className="bg-white w-full max-w-2xl rounded-[3rem] p-10 shadow-2xl space-y-8 animate-in slide-in-from-top-12 duration-500">
               <div className="flex justify-between items-center">
                  <h2 className="text-3xl font-black tracking-tighter">{t('createLesson')}</h2>
                  <button onClick={() => setIsLessonModalOpen(false)} className="p-3 bg-gray-100 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all"><X size={20} /></button>
@@ -193,16 +200,28 @@ const TeacherDashboard: React.FC = () => {
                     </div>
                  </div>
                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Description</label>
+                    <textarea 
+                       value={newLesson.description}
+                       onChange={(e) => setNewLesson({...newLesson, description: e.target.value})}
+                       className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:border-green-500 h-24"
+                       placeholder="What will you cover?"
+                    />
+                 </div>
+                 <div className="space-y-2">
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('status')}</label>
-                    <select 
-                      value={newLesson.status}
-                      onChange={(e) => setNewLesson({...newLesson, status: e.target.value as any})}
-                      className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:border-green-500"
-                    >
-                       <option value="Draft">Draft</option>
-                       <option value="Ready">Ready</option>
-                       <option value="Reviewing">Reviewing</option>
-                    </select>
+                    <div className="flex gap-2">
+                       {['Draft', 'Ready', 'Reviewing'].map(s => (
+                         <button 
+                           key={s}
+                           type="button"
+                           onClick={() => setNewLesson({...newLesson, status: s as any})}
+                           className={`flex-1 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${newLesson.status === s ? 'bg-green-500 text-white shadow-lg' : 'bg-gray-50 text-gray-400'}`}
+                         >
+                           {s}
+                         </button>
+                       ))}
+                    </div>
                  </div>
                  <div className="flex justify-end pt-4">
                     <button type="submit" className="px-10 py-5 bg-green-500 text-white font-black rounded-2xl uppercase tracking-widest text-xs flex items-center space-x-3 shadow-xl hover:bg-green-600 transition-all">
@@ -215,7 +234,7 @@ const TeacherDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* Dashboard Stats */}
+      {/* Advanced Stats Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         {[
           { label: 'Assigned Classes', value: '3', sub: 'Active', icon: Layout, color: 'text-blue-500' },
@@ -251,34 +270,112 @@ const TeacherDashboard: React.FC = () => {
            </div>
         </div>
 
-        <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
+        {/* ORGANIZED LESSON PLANNER LIST */}
+        <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10 flex flex-col">
            <div className="flex justify-between items-center">
               <h4 className="text-2xl font-black tracking-tighter">{t('lessonPlanner')}</h4>
               <button 
                 onClick={() => setIsLessonModalOpen(true)}
                 className="p-3 bg-gray-50 rounded-xl text-gray-400 hover:text-green-500 transition-colors"><Plus size={18} /></button>
            </div>
-           <div className="space-y-4 max-h-[350px] overflow-y-auto custom-scrollbar pr-4">
-              {lessons.map((plan, i) => (
-                <div key={i} className="p-6 bg-gray-50 rounded-3xl flex items-center justify-between group hover:bg-gray-950 hover:text-white transition-all animate-in fade-in duration-500">
+           <div className="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-4 max-h-[400px]">
+              {lessons.map((plan) => (
+                <div key={plan.id} className="p-6 bg-gray-50 rounded-3xl flex items-center justify-between group hover:bg-gray-950 hover:text-white transition-all animate-in fade-in duration-500">
                    <div className="space-y-1">
                       <p className="text-lg font-black tracking-tight leading-none">{plan.title}</p>
                       <div className="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-400">
                          <Clock size={12} />
                          <span>{plan.time} • {plan.class}</span>
                       </div>
+                      {plan.description && <p className="text-[10px] font-medium text-gray-400 group-hover:text-white/60 pt-2">{plan.description}</p>}
                    </div>
-                   <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                     plan.status === 'Ready' ? 'bg-green-100 text-green-600' : 
-                     plan.status === 'Reviewing' ? 'bg-orange-100 text-orange-600' : 
-                     'bg-gray-200 text-gray-600'
-                   } group-hover:bg-white/10 group-hover:text-white transition-all`}>
-                     {plan.status}
-                   </span>
+                   <div className="flex items-center space-x-3">
+                      <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                        plan.status === 'Ready' ? 'bg-green-100 text-green-600' : 
+                        plan.status === 'Reviewing' ? 'bg-orange-100 text-orange-600' : 
+                        'bg-gray-200 text-gray-600'
+                      } group-hover:bg-white/10 group-hover:text-white transition-all`}>
+                        {plan.status}
+                      </span>
+                      <button 
+                        onClick={() => removeLesson(plan.id)}
+                        className="p-2 text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+                      >
+                         <Trash2 size={16} />
+                      </button>
+                   </div>
                 </div>
               ))}
+              {lessons.length === 0 && (
+                <div className="h-full flex flex-col items-center justify-center space-y-4 text-gray-400 py-10">
+                   <Calendar size={48} className="opacity-20" />
+                   <p className="font-bold">Nta masomo apanze ahari.</p>
+                </div>
+              )}
            </div>
         </div>
+      </div>
+
+      {/* NEW POWERFUL COMPONENTS: Resource Sharing & Communication */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+         <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10 xl:col-span-1">
+            <div className="flex justify-between items-center">
+               <h4 className="text-2xl font-black tracking-tighter">Shared Resources</h4>
+               <button className="p-3 bg-gray-50 rounded-xl text-blue-500 hover:bg-blue-500 hover:text-white transition-all"><FolderOpen size={18} /></button>
+            </div>
+            <div className="space-y-3">
+               {[
+                 { name: 'Syllabus_SOD_L5.pdf', size: '2.4MB', type: 'PDF' },
+                 { name: 'React_Hooks_Guide.zip', size: '15MB', type: 'Archive' },
+                 { name: 'Final_Exam_Review.docx', size: '800KB', type: 'Word' }
+               ].map((file, i) => (
+                 <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl group hover:bg-blue-50 transition-all cursor-pointer">
+                    <div className="flex items-center space-x-4">
+                       <FileText size={20} className="text-gray-400 group-hover:text-blue-500" />
+                       <div className="space-y-0.5">
+                          <p className="text-xs font-black text-gray-900">{file.name}</p>
+                          <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">{file.size} • {file.type}</p>
+                       </div>
+                    </div>
+                    <ArrowUpRight size={16} className="text-gray-300 group-hover:text-blue-500 transition-all" />
+                 </div>
+               ))}
+            </div>
+         </div>
+
+         <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10 xl:col-span-2">
+            <div className="flex justify-between items-center">
+               <h4 className="text-2xl font-black tracking-tighter">Student Communication Hub</h4>
+               <div className="flex items-center space-x-2">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">12 New Messages</span>
+               </div>
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar">
+               {students.map(s => (
+                 <div key={s.id} className="flex-shrink-0 flex flex-col items-center space-y-2 group cursor-pointer">
+                    <div className="relative">
+                       <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center text-gray-500 font-black text-xl group-hover:bg-indigo-500 group-hover:text-white transition-all border-2 border-transparent group-hover:border-white shadow-sm">{s.name.charAt(0)}</div>
+                       <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 border-4 border-white rounded-full"></div>
+                    </div>
+                    <span className="text-[10px] font-black text-gray-950 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">{s.name.split(' ')[0]}</span>
+                 </div>
+               ))}
+               <button className="flex-shrink-0 w-16 h-16 bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-indigo-500 transition-all">
+                  <Plus size={24} />
+               </button>
+            </div>
+            <div className="p-6 bg-gray-50 rounded-3xl flex items-center justify-between border border-gray-100 group hover:border-indigo-500 transition-all">
+               <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-indigo-500 text-white rounded-2xl flex items-center justify-center shadow-lg"><Send size={20} /></div>
+                  <div className="space-y-1">
+                     <p className="text-sm font-black text-gray-900">Broadcast to all students</p>
+                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Announce assignments or reminders</p>
+                  </div>
+               </div>
+               <ChevronRight className="text-gray-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" />
+            </div>
+         </div>
       </div>
 
       <section className="bg-white p-12 lg:p-16 rounded-[4rem] border border-gray-100 shadow-sm space-y-12">
@@ -315,7 +412,7 @@ const TeacherDashboard: React.FC = () => {
                  </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                 {filteredStudents.map((student, i) => (
+                 {filteredStudents.map((student) => (
                     <tr key={student.id} className="group hover:bg-gray-50 transition-colors">
                        <td 
                         onClick={() => setSelectedStudent(student)}

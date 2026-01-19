@@ -3,7 +3,7 @@ import React from 'react';
 import { 
   DollarSign, TrendingUp, TrendingDown, Activity, Clock, AlertTriangle, 
   Search, Bell, Download, Filter, Plus, UserCheck, Calculator, Package, FileText, ChevronRight,
-  Briefcase, CreditCard, PieChart as PieIcon, User
+  Briefcase, CreditCard, PieChart as PieIcon, User, Layers, ArrowUpRight
 } from 'lucide-react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
@@ -13,47 +13,50 @@ import { useLanguage } from '../../components/LanguageContext';
 
 const AccountantDashboard: React.FC = () => {
   const { t } = useLanguage();
-  const paymentStats = [
-    { name: 'Sep', total: 4000, collected: 2400 },
-    { name: 'Oct', total: 3000, collected: 3200 },
-    { name: 'Nov', total: 2000, collected: 5800 },
-    { name: 'Dec', total: 2780, collected: 3908 },
-    { name: 'Jan', total: 5000, collected: 4800 },
+  
+  const financialHealth = [
+    { name: 'Sep', revenue: 4000, expenses: 2400 },
+    { name: 'Oct', revenue: 3000, expenses: 2200 },
+    { name: 'Nov', revenue: 6000, expenses: 2800 },
+    { name: 'Dec', revenue: 5780, expenses: 3908 },
+    { name: 'Jan', revenue: 7000, expenses: 3100 },
   ];
 
-  const arrearsData = [
-    { name: 'SOD', value: 45 },
-    { name: 'BDC', value: 25 },
-    { name: 'AUTO', value: 30 },
+  const expenseAllocation = [
+    { name: 'Staff Salaries', value: 45, color: '#3b82f6' },
+    { name: 'Infrastructure', value: 25, color: '#22c55e' },
+    { name: 'Workshop Tools', value: 20, color: '#f59e0b' },
+    { name: 'Utilities', value: 10, color: '#ef4444' },
   ];
-
-  const COLORS = ['#22c55e', '#3b82f6', '#ef4444'];
 
   return (
     <div className="p-8 lg:p-16 space-y-12">
       <header className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-10">
         <div className="space-y-2">
           <div className="flex items-center space-x-4">
-            <div className="p-4 bg-white shadow-xl border border-gray-100 rounded-[1.5rem]"><Calculator className="text-gray-950" /></div>
-            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">{t('finance')}</h1>
+            <div className="p-4 bg-white shadow-xl border border-gray-100 rounded-[1.5rem]"><CreditCard className="text-gray-950" /></div>
+            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">Finance Hub</h1>
           </div>
-          <p className="text-gray-400 font-medium ml-16">Ushinzwe Imari n'Imicungire y'Ishuri</p>
+          <p className="text-gray-400 font-medium ml-16">Ushinzwe Imari n'Imicungire y'Ishuri - Advanced Insights</p>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="relative group w-80">
-            <input type="text" placeholder="Shakisha umunyeshuri..." className="w-full pl-12 pr-6 py-4 bg-white border border-gray-100 rounded-2xl outline-none shadow-sm focus:ring-4 focus:ring-green-400/10 focus:border-green-400 font-bold transition-all" />
-            <Search className="absolute left-4 top-4 text-gray-400" size={18} />
-          </div>
-          <button className="p-4 bg-white border border-gray-100 rounded-2xl text-gray-400 hover:text-gray-950 hover:shadow-xl transition-all"><Bell size={22} /></button>
+          <button className="flex items-center space-x-3 px-8 py-4 bg-gray-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-500 transition-all shadow-xl">
+             <Plus size={18} />
+             <span>New Invoice</span>
+          </button>
+          <button className="flex items-center space-x-3 px-8 py-4 bg-blue-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl">
+             <Download size={18} />
+             <span>Export Audit</span>
+          </button>
         </div>
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         {[
           { label: 'Total Revenue', value: '14.2M', sub: '+12.5%', icon: DollarSign, color: 'text-green-500' },
-          { label: 'Arrears', value: '3.4M', sub: 'Debt', icon: TrendingDown, color: 'text-red-500' },
-          { label: 'Velocity', value: '82%', sub: 'Healthy', icon: TrendingUp, color: 'text-blue-500' },
-          { label: 'Pending', value: '12', sub: 'Invoices', icon: Clock, color: 'text-purple-500' },
+          { label: 'Total Expenses', value: '8.1M', sub: 'On Track', icon: TrendingDown, color: 'text-red-500' },
+          { label: 'Profit Margin', value: '42%', sub: 'Healthy', icon: PieIcon, color: 'text-blue-500' },
+          { label: 'Pending Dues', value: '2.8M', sub: 'High Risk', icon: AlertTriangle, color: 'text-purple-500' },
         ].map((stat, i) => (
           <div key={i} className="bg-white p-10 rounded-[3rem] shadow-sm border border-gray-100 hover:shadow-2xl transition-all group relative overflow-hidden">
              <div className="flex justify-between items-start mb-6">
@@ -66,71 +69,91 @@ const AccountantDashboard: React.FC = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-        <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-8">
-          <h4 className="text-2xl font-black tracking-tighter">Collection Performance</h4>
-          <div className="h-[350px]">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+        <div className="xl:col-span-2 bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
+          <div className="flex justify-between items-center">
+             <h4 className="text-2xl font-black tracking-tighter">Revenue vs Expenses</h4>
+             <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2"><div className="w-3 h-3 bg-blue-500 rounded-full"></div><span className="text-[10px] font-black uppercase text-gray-400">Revenue</span></div>
+                <div className="flex items-center space-x-2"><div className="w-3 h-3 bg-red-500 rounded-full"></div><span className="text-[10px] font-black uppercase text-gray-400">Expenses</span></div>
+             </div>
+          </div>
+          <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={paymentStats}>
+              <AreaChart data={financialHealth}>
                 <defs>
-                  <linearGradient id="colorColl" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#22c55e" stopOpacity={0.1}/>
-                    <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
-                  </linearGradient>
+                  <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/><stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/></linearGradient>
+                  <linearGradient id="colorExp" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#ef4444" stopOpacity={0.1}/><stop offset="95%" stopColor="#ef4444" stopOpacity={0}/></linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10}} />
-                <Tooltip contentStyle={{borderRadius: '1.5rem', border: 'none'}} />
-                <Area type="monotone" dataKey="collected" stroke="#22c55e" strokeWidth={4} fill="url(#colorColl)" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 900}} />
+                <Tooltip contentStyle={{borderRadius: '1.5rem', border: 'none', boxShadow: '0 20px 50px rgba(0,0,0,0.1)'}} />
+                <Area type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={4} fill="url(#colorRev)" />
+                <Area type="monotone" dataKey="expenses" stroke="#ef4444" strokeWidth={4} fill="url(#colorExp)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        {/* Staff Payroll Section (NEW) */}
-        <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-8">
-           <div className="flex justify-between items-center">
-              <h4 className="text-2xl font-black tracking-tighter">{t('payroll')}</h4>
-              <button className="px-6 py-2 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">Process All</button>
-           </div>
-           <div className="space-y-4">
-              {[
-                { name: 'Dr. Karasira Peter', role: 'Teacher', amount: '450,000 RWF', status: 'Pending' },
-                { name: 'Mugisha Alice', role: 'DOS', amount: '620,000 RWF', status: 'Approved' },
-                { name: 'Gasana Eric', role: 'Support', amount: '120,000 RWF', status: 'Paid' }
-              ].map((staff, i) => (
-                <div key={i} className="flex items-center justify-between p-6 bg-gray-50 rounded-[2.5rem] hover:shadow-lg transition-all">
-                   <div className="flex items-center space-x-4">
-                      {/* Fixed: Added missing User icon import */}
-                      <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-blue-500"><User size={20} /></div>
-                      <div>
-                         <p className="font-black text-gray-900">{staff.name}</p>
-                         <p className="text-[10px] font-black text-gray-400 uppercase">{staff.role}</p>
-                      </div>
+        <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
+           <h4 className="text-2xl font-black tracking-tighter">Expense Allocation</h4>
+           <div className="space-y-6">
+              {expenseAllocation.map((item, i) => (
+                <div key={i} className="space-y-2">
+                   <div className="flex justify-between items-center px-1">
+                      <span className="text-xs font-black text-gray-900">{item.name}</span>
+                      <span className="text-xs font-black text-gray-400">{item.value}%</span>
                    </div>
-                   <div className="text-right">
-                      <p className="font-black text-gray-900">{staff.amount}</p>
-                      <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${staff.status === 'Paid' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>{staff.status}</span>
+                   <div className="w-full h-3 bg-gray-50 rounded-full overflow-hidden border border-gray-100">
+                      <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${item.value}%`, backgroundColor: item.color }}></div>
                    </div>
                 </div>
               ))}
            </div>
+           <div className="pt-6 border-t border-gray-100">
+              <button className="w-full py-5 bg-gray-950 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all">Optimize Budget</button>
+           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-        {[
-          { name: 'Fee Invoices', icon: DollarSign, color: 'bg-green-50 text-green-500' },
-          { name: 'Payroll Logs', icon: Clock, color: 'bg-blue-50 text-blue-500' },
-          { name: 'Stock Costs', icon: Package, color: 'bg-red-50 text-red-500' },
-          { name: 'Audit Reports', icon: FileText, color: 'bg-gray-100 text-gray-900' },
-        ].map((feat, i) => (
-          <div key={i} className="group bg-white p-8 rounded-[2.5rem] border border-gray-100 hover:shadow-xl transition-all cursor-pointer">
-             <div className={`w-14 h-14 ${feat.color} rounded-2xl flex items-center justify-center mb-6`}><feat.icon size={24} /></div>
-             <h5 className="text-xl font-black text-gray-950">{feat.name}</h5>
-             <div className="mt-4 flex justify-end text-gray-300 group-hover:text-green-500 transition-colors"><ChevronRight /></div>
-          </div>
-        ))}
+      <div className="bg-white p-12 lg:p-16 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
+         <div className="flex justify-between items-center">
+            <h4 className="text-2xl font-black tracking-tighter">Recent Transactions</h4>
+            <button className="flex items-center space-x-2 text-blue-600 font-black text-xs uppercase tracking-widest">
+               <span>View All</span>
+               <ArrowUpRight size={16} />
+            </button>
+         </div>
+         <div className="overflow-x-auto custom-scrollbar pb-4">
+            <table className="w-full text-left">
+               <thead>
+                  <tr className="border-b border-gray-100">
+                     <th className="pb-6 text-[10px] font-black text-gray-400 uppercase tracking-widest px-4">Transaction ID</th>
+                     <th className="pb-6 text-[10px] font-black text-gray-400 uppercase tracking-widest px-4">Entity / Purpose</th>
+                     <th className="pb-6 text-[10px] font-black text-gray-400 uppercase tracking-widest px-4">Amount</th>
+                     <th className="pb-6 text-[10px] font-black text-gray-400 uppercase tracking-widest px-4">Status</th>
+                     <th className="pb-6 text-[10px] font-black text-gray-400 uppercase tracking-widest px-4 text-right">Date</th>
+                  </tr>
+               </thead>
+               <tbody className="divide-y divide-gray-50">
+                  {[
+                    { id: '#TR-8821', name: 'RTB Equipment Purchase', amount: '2.5M RWF', status: 'Completed', date: 'Today' },
+                    { id: '#TR-8822', name: 'Staff Salary (Nov)', amount: '6.2M RWF', status: 'Pending', date: 'Yesterday' },
+                    { id: '#TR-8823', name: 'Utility Bills', amount: '850K RWF', status: 'Completed', date: 'Dec 28' },
+                  ].map((tr) => (
+                    <tr key={tr.id} className="group hover:bg-gray-50 transition-colors">
+                       <td className="py-6 px-4 font-black text-sm text-gray-400">{tr.id}</td>
+                       <td className="py-6 px-4 font-black text-gray-900">{tr.name}</td>
+                       <td className="py-6 px-4 font-black text-gray-900">{tr.amount}</td>
+                       <td className="py-6 px-4">
+                          <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${tr.status === 'Completed' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>{tr.status}</span>
+                       </td>
+                       <td className="py-6 px-4 text-right text-sm font-bold text-gray-400">{tr.date}</td>
+                    </tr>
+                  ))}
+               </tbody>
+            </table>
+         </div>
       </div>
     </div>
   );

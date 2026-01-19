@@ -7,68 +7,68 @@ export const TRADES: Trade[] = [
     id: 'sod',
     name: 'Gukora Porogaramu',
     code: 'SOD',
-    description: 'Master full-stack development, mobile apps, and systems engineering.',
+    description: 'Master full-stack development, mobile apps, and systems engineering hifashishijwe ikoranabuhanga rya kijyambere.',
     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop',
     levels: [
-      { id: 'sod3', name: 'Urwego rwa 3 SOD', description: 'Ibyibanze kuri mudasobwa no gutangira gukora porogaramu.' },
-      { id: 'sod4', name: 'Urwego rwa 4 SOD', description: 'Gukora imbuga, gucunga amakuru, no gushushanya imiterere ya porogaramu.' },
-      { id: 'sod5', name: 'Urwego rwa 5 SOD', description: 'Inyigisho zihanitse ku gukora porogaramu, Cloud, na porogaramu za telefone.' }
+      { id: 'sod3', name: 'Urwego rwa 3 SOD', description: 'Ibyibanze kuri mudasobwa, kumenya imikorere yazo, no gutangira kwandika code zoroshye (Algorithm).' },
+      { id: 'sod4', name: 'Urwego rwa 4 SOD', description: 'Gukora imbuga za Web (Front-end & Back-end), gucunga amakuru (Database), no gushushanya imiterere ya porogaramu.' },
+      { id: 'sod5', name: 'Urwego rwa 5 SOD', description: 'Inyigisho zihanitse ku gukora porogaramu z’ibigo binini, Cloud Computing, na porogaramu za telefone (Mobile Apps).' }
     ],
     tools: [
-      { name: 'VS Code', description: "Igikoresho cy'ibanze mu kwandika code." },
-      { name: 'Git & GitHub', description: 'Uburyo bwo kubika no guhuza imishinga.' },
-      { name: 'Docker', description: 'Gupakira porogaramu mu buryo bwa kijyambere.' },
-      { name: 'SQL Workbench', description: 'Gushushanya no gucunga amakuru.' }
+      { name: 'VS Code & JetBrains', description: "Ibikoresho by'ibanze mu kwandika code no gukora imishinga." },
+      { name: 'Git & GitHub', description: 'Uburyo bwo kubika, gukurikirana no guhuza imishinga y\'ikoranabuhanga.' },
+      { name: 'Docker & Kubernetes', description: 'Gupakira no gucunga porogaramu mu buryo bugezweho bwa Cloud.' },
+      { name: 'SQL Workbench', description: 'Gushushanya, kubaka, no gucunga amakuru (Databases) mu buryo bwa kinyamwuga.' }
     ],
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070', caption: 'Abanyeshuri bafatanya mu mushinga wa porogaramu.' },
-      { url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071', caption: 'Inyigisho ku miterere y’imbuga nkoranyambaga.' },
+      { url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070', caption: 'Abanyeshuri bafatanya mu mushinga wa porogaramu mu Lab.' },
+      { url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071', caption: 'Inyigisho ku miterere y’imbuga nkoranyambaga n’umutekano.' },
       { url: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070', caption: 'Gusuzuma uburyo sisitemu zikora mu buryo bwa kijyambere.' },
-      { url: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070', caption: 'Gupima porogaramu z’imfashanyigisho kuri telefone.' }
+      { url: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070', caption: 'Gupima porogaramu z’imfashanyigisho kuri telefone muri Lab yacu.' }
     ],
     coreModules: [
-      'Uburyo Porogaramu Zubakwa',
-      'Gukora Imbuga za Web',
-      'Ikoranabuhanga rya Cloud',
-      'Gukora Porogaramu za Telefone',
-      'Umutekano w’Ikoranabuhanga'
+      'Uburyo Porogaramu Zubakwa (Data Structures)',
+      'Gukora Imbuga za Web (Full Stack)',
+      'Ikoranabuhanga rya Cloud (AWS/Azure)',
+      'Gukora Porogaramu za Telefone (Android/iOS)',
+      'Umutekano w’Ikoranabuhanga (Cybersecurity)'
     ],
     careerProspects: [
-      'Umukanishi wa Porogaramu',
-      'Injeniyeri wa Cloud',
-      'Ushinzwe Umutekano w’Ikoranabuhanga',
+      'Umukanishi wa Porogaramu (Software Dev)',
+      'Injeniyeri wa Cloud (Cloud Engineer)',
+      'Ushinzwe Umutekano (Security Analyst)',
       'Umwubatsi w’Imbuga za Web',
-      'Ushinzwe Ubuziranenge bwa Porogaramu'
+      'Ushinzwe Ubuziranenge (QA Engineer)'
     ]
   },
   {
     id: 'bdc',
     name: 'Ubwubatsi',
     code: 'BDC',
-    description: 'Expert training in modern architecture, masonry, and sustainable techniques.',
+    description: 'Expert training in modern architecture, masonry, and sustainable building techniques mu buryo bw’umwuga.',
     image: 'https://images.unsplash.com/photo-1503387762-592dee58c160?q=80&w=2070&auto=format&fit=crop',
     levels: [
-      { id: 'bdc3', name: 'Urwego rwa 3 BDC', description: 'Ibyibanze mu bwubatsi, gutegura ikibanza n’umutekano.' },
-      { id: 'bdc4', name: 'Urwego rwa 4 BDC', description: 'Ububaji, amapombo, no gusoma ibishushanyo mbonera.' },
-      { id: 'bdc5', name: 'Urwego rwa 5 BDC', description: 'Injeniyeri, gucunga imishinga, no gusoza inyubako.' }
+      { id: 'bdc3', name: 'Urwego rwa 3 BDC', description: 'Ibyibanze mu bwubatsi, gutegura ikibanza cy’inyubako, n’umutekano n’ubuzima mu kazi.' },
+      { id: 'bdc4', name: 'Urwego rwa 4 BDC', description: 'Ububaji (Carpentry), amapombo (Plumbing), no gusoma neza ibishushanyo mbonera by’inyubako.' },
+      { id: 'bdc5', name: 'Urwego rwa 5 BDC', description: 'Injeniyeri, gucunga imishinga (Project Management), no gusoza inyubako (Finishing) mu buryo bugezweho.' }
     ],
     tools: [
-      { name: 'Laser Level', description: 'Gupima humorongo neza.' },
-      { name: 'Trowels', description: "Ibikoresho by'ibanze mu gusiga sima." },
-      { name: 'Concrete Mixer', description: 'Imashini ivanga sima.' },
-      { name: 'Theodolite', description: "Gupima imiterere y'ubutaka." }
+      { name: 'Laser Level & Theodolite', description: 'Gupima humorongo n\'imiterere y\'ubutaka neza mu buryo bwa gihanga.' },
+      { name: 'Trowels & Plumb Bobs', description: "Ibikoresho by'ibanze mu gusiga sima no kureba ko urukuta rurambuye." },
+      { name: 'Concrete Mixer', description: 'Imashini ivanga sima, umusenyi, n\'amazi mu rugero rwa kinyamwuga.' },
+      { name: 'Excavation Tools', description: "Ibikoresho byifashishwa mu gutegura umusingi w'inyubako." }
     ],
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070', caption: 'Uburyo bwiza bwo kubaka inkuta.' },
-      { url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070', caption: 'Gusoma igishushanyo mbonera cy’inyubako.' },
-      { url: 'https://images.unsplash.com/photo-1589939705384-5185138a04b9?q=80&w=2070', caption: 'Gusoza imirimo y’ubwubatsi.' },
-      { url: 'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=2070', caption: 'Igisenge kijyanye n’ibidukikije.' }
+      { url: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070', caption: 'Uburyo bwiza bwo kubaka inkuta ziramba.' },
+      { url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2070', caption: 'Abanyeshuri basoma igishushanyo mbonera cy’inyubako.' },
+      { url: 'https://images.unsplash.com/photo-1589939705384-5185138a04b9?q=80&w=2070', caption: 'Gusoza imirimo y’ubwubatsi bugezweho.' },
+      { url: 'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=2070', caption: 'Kubaka igisenge kijyanye n’ibidukikije muri Garden TVET.' }
     ],
     coreModules: [
-      'Gusoma Ibishushanyo Mbonera',
-      'Inganda n’Ubwubatsi',
-      'Ibikoresho biramba by’ubwubatsi',
-      'Uburyo bwo gushyira amazi n’amashanyarazi mu nzu',
+      'Gusoma Ibishushanyo Mbonera (Blueprint Reading)',
+      'Inganda n’Ubwubatsi rwa Kijyambere',
+      'Ibikoresho biramba by’ubwubatsi (Sustainable Materials)',
+      'Gushyira amazi n’amashanyarazi mu nzu',
       'Gucunga Imishinga y’Ubwubatsi'
     ],
     careerProspects: [
@@ -76,46 +76,46 @@ export const TRADES: Trade[] = [
       'Injeniyeri w’ubwubatsi',
       'RWiyemezamirimo mu bwubatsi',
       'Umujyanama mu bwubatsi',
-      'Ushinzwe kugena ingano y’ibikenewe'
+      'Ushinzwe kugena ingano y’ibikenewe (QS)'
     ]
   },
   {
     id: 'auto',
     name: 'Ikinyabiziga',
     code: 'AUT',
-    description: 'Leading edge diagnosis, repair, and innovation in automotive systems.',
+    description: 'Leading edge diagnosis, repair, and innovation in automotive systems hifashishijwe mudasobwa.',
     image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2072&auto=format&fit=crop',
     levels: [
-      { id: 'aut3', name: 'Urwego rwa 3 AUT', description: 'Ibyibanze kuri moteri no kuyisana.' },
-      { id: 'aut4a', name: 'Urwego rwa 4a AUT', description: "Sisitemu zikomeye zihambaye n'imikorere y'imodoka." },
-      { id: 'aut4b', name: 'Urwego rwa 4b AUT', description: "Amashanyarazi y'imodoka no kuyahuza." },
-      { id: 'aut5a', name: 'Urwego rwa 5a AUT', description: 'Gusuzuma imodoka hifashishijwe ikoranabuhanga.' },
-      { id: 'aut5b', name: 'Urwego rwa 5b AUT', description: 'Imodoka zikoresha amashanyarazi.' }
+      { id: 'aut3', name: 'Urwego rwa 3 AUT', description: 'Ibyibanze kuri moteri (Engine components), kuyisana, no kumenya imikorere y’ibinyabiziga.' },
+      { id: 'aut4a', name: 'Urwego rwa 4a AUT', description: "Sisitemu zikomeye zihambaye, moteri za Mazutu (Diesel), n'imikorere y'amapine." },
+      { id: 'aut4b', name: 'Urwego rwa 4b AUT', description: "Amashanyarazi y'imodoka (Auto-Electric) no kuyahuza n'ibindi bice." },
+      { id: 'aut5a', name: 'Urwego rwa 5a AUT', description: 'Gusuzuma imodoka hifashishijwe ikoranabuhanga rya mudasobwa (Diagnosis).' },
+      { id: 'aut5b', name: 'Urwego rwa 5b AUT', description: 'Inyigisho ku modoka zikoresha amashanyarazi (EVs) n’imodoka zivanga (Hybrids).' }
     ],
     tools: [
-      { name: 'OBD-II Scanner', description: "Gusuzuma ibibazo by'imodoka hakoreshejwe mudasobwa." },
-      { name: 'Pneumatic Wrench', description: "Igikoresho gifungura n'ingufu z'umwuka." },
-      { name: 'Hydraulic Lift', description: 'Uburyo bwo kuzamura imodoka hejuru.' },
-      { name: 'Engine Stand', description: 'Aho moteri itererwa kugira ngo isanwe.' }
+      { name: 'OBD-II Scanner & Diagnostic Tool', description: "Gusuzuma ibibazo by'imodoka hakoreshejwe mudasobwa (Scanner)." },
+      { name: 'Pneumatic Wrench', description: "Igikoresho gifungura n'ingufu z'umwuka ku buryo bwihuse." },
+      { name: 'Hydraulic Lift', description: 'Uburyo bwo kuzamura imodoka hejuru kugira ngo isuzumwe munsi.' },
+      { name: 'Engine Stand', description: 'Aho moteri itererwa kugira ngo isanwe mu buryo bworoshye.' }
     ],
     gallery: [
-      { url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070', caption: 'Gusuzuma no gusana moteri.' },
-      { url: 'https://images.unsplash.com/photo-1493238507129-15510bfad190?q=80&w=2070', caption: 'Gukoresha mudasobwa mu gusuzuma imodoka.' },
-      { url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=2072', caption: 'Imodoka zikoresha amashanyarazi.' },
+      { url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070', caption: 'Gusuzuma no gusana moteri mu igaraje.' },
+      { url: 'https://images.unsplash.com/photo-1493238507129-15510bfad190?q=80&w=2070', caption: 'Gukoresha mudasobwa mu gusuzuma imodoka za none.' },
+      { url: 'https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=2072', caption: 'Inyigisho ku modoka zikoresha amashanyarazi.' },
       { url: 'https://images.unsplash.com/photo-1530046339160-ce3e5b0c7a2f?q=80&w=2070', caption: 'Uburyo bwo gusuzuma feri n’imikorere y’imodoka.' }
     ],
     coreModules: [
-      'Gusuzuma no Gusana Moteri',
-      'Imodoka zikoresha Amashanyarazi',
-      'Sisitemu z’Ikoranabuhanga mu modoka',
-      'Ikoranabuhanga rya Feri',
-      'Uburyo imodoka ihagarara'
+      'Gusuzuma no Gusana Moteri (Engine Repair)',
+      'Imodoka zikoresha Amashanyarazi (Hybrid/EV Tech)',
+      'Sisitemu z’Ikoranabuhanga mu modoka (ECU)',
+      'Ikoranabuhanga rya Feri (ABS/Braking Systems)',
+      'Uburyo imodoka ihagarara neza (Suspension)'
     ],
     careerProspects: [
       'Ushinzwe igaraje ry’imodoka',
       'Umukanishi w’imodoka z’amashanyarazi',
-      'Ushinzwe gusuzuma ibinyabiziga',
-      'Injeniyeri w’imodoka',
+      'Ushinzwe gusuzuma ibinyabiziga (Vehicle Inspector)',
+      'Injeniyeri w’imodoka (Automotive Engineer)',
       'Umujyanama mu by’imodoka'
     ]
   }
