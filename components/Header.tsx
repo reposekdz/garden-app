@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// Added ChevronRight to the import list
 import { Search, Menu, X, Globe, LogIn, Bell, Command, Sun, Moon, Sparkles, Activity, ChevronRight } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
@@ -43,15 +42,19 @@ const Header: React.FC = () => {
     }`}>
       <div className="w-full px-4 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center">
-          {/* Logo Area with Glassmorphism for High Visibility */}
+          {/* Logo Area with Fixed Glassmorphism for High Visibility */}
           <Link to="/" className="group relative flex items-center space-x-4 flex-shrink-0 z-20">
-            <div className="absolute inset-[-12px] bg-white/10 backdrop-blur-md rounded-[2.5rem] border border-white/20 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {/* Persistent background blur container for visibility */}
+            <div className={`absolute inset-[-12px] rounded-[2.5rem] border border-white/20 shadow-xl transition-all duration-500 backdrop-blur-xl ${
+              scrolled ? 'bg-white/30 opacity-100' : 'bg-white/10 opacity-100 shadow-white/5'
+            }`}></div>
+            
             <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-400 to-blue-600 rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center text-white font-black text-2xl sm:text-3xl shadow-2xl transform group-hover:rotate-12 transition-all duration-500">G</div>
             <div className="relative flex flex-col">
-              <span className="text-xl sm:text-2xl font-black tracking-tighter text-gray-900 leading-none drop-shadow-sm">Garden <span className="gradient-text">TVET</span></span>
+              <span className={`text-xl sm:text-2xl font-black tracking-tighter leading-none drop-shadow-sm transition-colors duration-500 ${scrolled ? 'text-gray-900' : 'text-white sm:text-gray-900'}`}>Garden <span className="gradient-text">TVET</span></span>
               <div className="flex items-center space-x-1 mt-1.5">
                  <Activity size={10} className="text-green-500 animate-pulse" />
-                 <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Excellence Hub</span>
+                 <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-500 ${scrolled ? 'text-gray-400' : 'text-gray-300 sm:text-gray-400'}`}>Excellence Hub</span>
               </div>
             </div>
           </Link>
@@ -134,7 +137,7 @@ const Header: React.FC = () => {
             <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
               <Link
                 to="/login"
-                className="px-6 py-3.5 text-sm font-black text-gray-700 hover:text-gray-900 transition-colors"
+                className={`px-6 py-3.5 text-sm font-black transition-colors ${scrolled ? 'text-gray-700 hover:text-gray-900' : 'text-white sm:text-gray-700'}`}
               >
                 {t('login')}
               </Link>

@@ -52,10 +52,7 @@ const HeroSlider: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/30 to-transparent flex items-center">
             <div className="w-full px-4 sm:px-8 lg:px-16 relative">
               <div className="max-w-5xl space-y-8 sm:space-y-12">
-                <div className="inline-flex items-center space-x-3 px-6 py-3 bg-white/10 backdrop-blur-2xl rounded-full border border-white/20 animate-in fade-in slide-in-from-left-4 duration-700">
-                  <Star className="text-yellow-400" size={16} fill="currentColor" />
-                  <span className="text-xs font-black text-white uppercase tracking-[0.4em]">Excellence Redefined • Intake 2026</span>
-                </div>
+                {/* Badge removed as per user request */}
                 
                 <h1 className="text-6xl sm:text-8xl lg:text-[10rem] font-black text-white drop-shadow-2xl leading-[0.8] tracking-tighter animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
                   {slide.title.split(' ').slice(0, -1).join(' ')} <br />
