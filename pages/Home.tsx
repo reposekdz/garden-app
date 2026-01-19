@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   Zap, Trophy, Rocket, Activity, Code, HardHat, Car, CheckCircle2,
-  Award, PlayCircle, Star
+  Award, PlayCircle, Star, Calendar, ArrowUpRight, BookOpen, Globe, Users,
+  Shield, Image, ChevronRight, MessageCircle
 } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
-import { TRADES } from '../constants';
+import { TRADES, CAMPUS_NEWS, SHORT_COURSES } from '../constants';
 
 const HeroSlider: React.FC = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const slides = [
     {
@@ -55,7 +57,7 @@ const HeroSlider: React.FC = () => {
   }, [slides.length]);
 
   return (
-    <div className="relative h-[100svh] w-full overflow-hidden bg-white">
+    <div className="relative min-h-[700px] h-[100svh] w-full overflow-hidden bg-white">
       {/* Background Images */}
       {slides.map((slide, idx) => (
         <div
@@ -68,8 +70,8 @@ const HeroSlider: React.FC = () => {
       ))}
 
       {/* Hero Content Wrapper */}
-      <div className="absolute inset-0 flex items-center pt-16 lg:pt-0">
-        <div className="container-fluid flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
+      <div className="absolute inset-0 flex items-center pt-16 lg:pt-0 pb-12 lg:pb-0">
+        <div className="container-fluid flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 h-full lg:h-auto">
           
           {/* Text Content */}
           <div className="w-full lg:flex-1 space-y-4 sm:space-y-6 lg:space-y-10 text-center lg:text-left animate-in fade-in slide-in-from-bottom-8 lg:slide-in-from-left-12 duration-1000">
@@ -95,38 +97,28 @@ const HeroSlider: React.FC = () => {
             </div>
           </div>
 
-          {/* 2x2 Responsive Navigation Grid */}
-          <div className="hidden sm:grid grid-cols-2 gap-4 lg:gap-6 w-full max-w-[320px] lg:max-w-none lg:w-auto animate-in fade-in slide-in-from-bottom-8 lg:slide-in-from-right-12 duration-1000 delay-200">
+          {/* 2x2 Responsive Navigation Grid - Optimized for Vertical Clearance */}
+          <div className="grid grid-cols-2 gap-3 xs:gap-4 lg:gap-6 w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[320px] lg:max-w-none lg:w-auto animate-in fade-in slide-in-from-bottom-8 lg:slide-in-from-right-12 duration-1000 delay-200 mt-auto lg:mt-0 mb-8 lg:mb-0">
              {slides.map((slide, i) => (
                <button 
                  key={i} 
-                 onClick={() => setCurrent(i)}
-                 className={`group relative aspect-[3/4] w-full lg:w-44 xl:w-56 rounded-2xl lg:rounded-[2.5rem] overflow-hidden border-2 lg:border-4 transition-all duration-700 shadow-2xl ${
+                 onClick={() => navigate(`/trades/${slide.id}`)}
+                 onMouseEnter={() => setCurrent(i)}
+                 className={`group relative aspect-[3/4] w-20 xs:w-24 sm:w-32 md:w-40 lg:w-44 xl:w-56 rounded-xl sm:rounded-2xl lg:rounded-[2.5rem] overflow-hidden border-2 lg:border-4 transition-all duration-700 shadow-2xl ${
                    i === current 
                    ? 'border-green-600 scale-105 shadow-green-600/30' 
                    : 'border-white/40 opacity-60 hover:opacity-100 hover:scale-105'
                  }`}
                >
                  <img src={slide.tradeImage} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4 lg:p-6 space-y-2">
-                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-xl flex items-center justify-center text-white shadow-xl ${slide.color} group-hover:rotate-6 transition-all`}>
-                       <slide.icon size={16} />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2 sm:p-4 lg:p-6 space-y-1 lg:space-y-2">
+                    <div className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl flex items-center justify-center text-white shadow-xl ${slide.color} group-hover:rotate-6 transition-all`}>
+                       <slide.icon className="w-3 sm:w-5 lg:w-6" />
                     </div>
-                    <p className="text-[8px] lg:text-[10px] font-black text-white uppercase tracking-widest">{slide.id}</p>
+                    <p className="text-[6px] sm:text-[8px] lg:text-[10px] font-black text-white uppercase tracking-widest leading-none truncate">{slide.id}</p>
                  </div>
                </button>
              ))}
-          </div>
-
-          {/* Mobile Only: Progress Dots */}
-          <div className="flex sm:hidden items-center space-x-3 pb-8">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`h-1.5 rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-green-500' : 'w-2 bg-white/40'}`}
-              />
-            ))}
           </div>
         </div>
       </div>
@@ -167,6 +159,44 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* News & Events Section */}
+      <section className="py-20 lg:py-32 bg-white overflow-hidden">
+        <div className="container-fluid">
+           <div className="flex justify-between items-end mb-12">
+              <div className="space-y-4">
+                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.4em]">Campus Highlights</p>
+                 <h2 className="text-4xl lg:text-6xl font-black tracking-tighter">Amakuru <span className="text-green-600">Mashya.</span></h2>
+              </div>
+              <button className="hidden sm:flex items-center space-x-2 text-sm font-black text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-widest">
+                 <span>Byose</span>
+                 <ArrowUpRight size={16} />
+              </button>
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {CAMPUS_NEWS.map((news) => (
+                <div key={news.id} className="group bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all overflow-hidden">
+                   <div className="h-64 overflow-hidden relative">
+                      <img src={news.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="" />
+                      <div className="absolute top-6 right-6 px-4 py-1 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-black uppercase tracking-widest text-gray-900">{news.tag}</div>
+                   </div>
+                   <div className="p-8 space-y-4">
+                      <div className="flex items-center space-x-2 text-gray-400 text-[10px] font-black uppercase tracking-widest">
+                         <Calendar size={12} />
+                         <span>{news.date}</span>
+                      </div>
+                      <h3 className="text-2xl font-black text-gray-950 leading-tight group-hover:text-green-600 transition-colors">{news.title}</h3>
+                      <button className="flex items-center space-x-2 text-xs font-black text-blue-600 uppercase tracking-widest">
+                         <span>Soma Byose</span>
+                         <ChevronRight size={14} />
+                      </button>
+                   </div>
+                </div>
+              ))}
+           </div>
+        </div>
+      </section>
+
       {/* Trades Exploration */}
       <section id="trades-section" className="py-16 sm:py-24 lg:py-40 bg-gray-50/50">
         <div className="container-fluid">
@@ -189,7 +219,7 @@ const Home: React.FC = () => {
                   <img src={trade.image} alt={trade.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent lg:from-white/95 lg:via-white/10 lg:to-transparent"></div>
                   
-                  {/* Default View (Always visible on mobile, hides on hover desktop) */}
+                  {/* Default View */}
                   <div className="absolute inset-0 p-6 sm:p-12 flex flex-col justify-end lg:group-hover:opacity-0 transition-all duration-500">
                       <div className="space-y-2 sm:space-y-4">
                          <div className="flex items-center space-x-2">
@@ -201,7 +231,7 @@ const Home: React.FC = () => {
                       </div>
                   </div>
 
-                  {/* Desktop Hover Detailed View */}
+                  {/* Desktop Hover View */}
                   <div className="hidden lg:flex absolute inset-0 p-12 bg-white/95 backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-all duration-1000 flex-col justify-center space-y-8">
                       <div className="flex items-center space-x-6">
                         <div className="w-20 h-20 bg-green-600 rounded-[1.8rem] flex items-center justify-center text-white shadow-2xl"><Award size={40} /></div>
@@ -227,6 +257,55 @@ const Home: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Short Courses Section */}
+      <section className="py-24 lg:py-40 bg-white">
+        <div className="container-fluid">
+           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12 mb-20">
+              <div className="space-y-6">
+                 <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.5em]">Fast-Track Skills</p>
+                 <h2 className="text-5xl lg:text-7xl font-black tracking-tighter leading-tight">Amasomo <br /><span className="text-blue-600">Amagufi.</span></h2>
+              </div>
+              <div className="max-w-xl space-y-4">
+                 <p className="text-xl text-gray-500 font-medium leading-relaxed">"Ubumenyi bwihuse ku bantu bashaka guhita binjira mu isoko ry'umurimo cyangwa kwihangira imirimo."</p>
+                 <button className="px-8 py-4 bg-gray-950 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-green-600 transition-all">Saba Itariki ya Vuba</button>
+              </div>
+           </div>
+
+           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+              {SHORT_COURSES.map((course) => (
+                <div key={course.id} className="p-10 bg-gray-50 rounded-[3rem] border border-gray-100 hover:bg-white hover:shadow-2xl transition-all space-y-8 group">
+                   <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-sm group-hover:scale-110 transition-transform">
+                      {course.icon === 'Shield' && <Shield size={32} />}
+                      {course.icon === 'Zap' && <Zap size={32} />}
+                      {course.icon === 'Image' && <Image size={32} />}
+                   </div>
+                   <div className="space-y-2">
+                      <h3 className="text-2xl font-black tracking-tight">{course.name}</h3>
+                      <p className="text-xs font-black text-gray-400 uppercase tracking-widest">{course.duration} • {course.price}</p>
+                   </div>
+                   <button className="w-full py-4 border-2 border-gray-200 rounded-xl font-black text-[10px] uppercase tracking-widest group-hover:border-blue-600 group-hover:text-blue-600 transition-all">Enroll Now</button>
+                </div>
+              ))}
+           </div>
+        </div>
+      </section>
+
+      {/* Partner Ecosystem */}
+      <section className="py-20 bg-gray-50">
+        <div className="container-fluid text-center space-y-12">
+           <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.4em]">Global Recognition</p>
+           <div className="flex flex-wrap justify-center items-center gap-10 lg:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all">
+              <div className="flex items-center space-x-3 text-3xl font-black text-gray-900 tracking-tighter">
+                <Globe size={40} />
+                <span>RTB Rwanda</span>
+              </div>
+              <div className="text-3xl font-black text-gray-900 tracking-tighter">UNESCO-UNEVOC</div>
+              <div className="text-3xl font-black text-gray-900 tracking-tighter">WDA</div>
+              <div className="text-3xl font-black text-gray-900 tracking-tighter">Rwanda Polytechnic</div>
+           </div>
         </div>
       </section>
 

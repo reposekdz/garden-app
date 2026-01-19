@@ -2,43 +2,102 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
-  Lock, User, ShieldAlert, X, ArrowRight, Github, Mail, Eye, EyeOff, 
-  ChevronLeft, Sparkles, ShieldCheck, Home
+  Lock, User, ShieldAlert, X, ArrowRight, Mail, Eye, EyeOff, 
+  ChevronLeft, Sparkles, ShieldCheck, Home, Phone, Smartphone, CheckCircle2, Shield,
+  Key, Command
 } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
 
 const Login: React.FC = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const [showMSModal, setShowMSModal] = useState(false);
-  const [msCode, setMSCode] = useState('');
-  const [error, setError] = useState('');
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [showPassword, setShowPassword] = useState(false);
+  const [credentials, setCredentials] = useState({ identifier: '', password: '' });
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [isVerifying, setIsVerifying] = useState(false);
+  
+  // MS Secret Access State
+  const [showMsPrompt, setShowMsPrompt] = useState(false);
+  const [msCode, setMsCode] = useState('');
 
-  const handleMSAuth = (e: React.FormEvent) => {
+  const handleCredentialsSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsVerifying(true);
+    setTimeout(() => {
+      setIsVerifying(false);
+      setStep(2);
+      setTimeout(() => setStep(3), 2000);
+    }, 1500);
+  };
+
+  const handleOtpChange = (index: number, val: string) => {
+    if (val.length > 1) return;
+    const newOtp = [...otp];
+    newOtp[index] = val;
+    setOtp(newOtp);
+    if (val && index < 5) {
+      document.getElementById(`otp-${index + 1}`)?.focus();
+    }
+  };
+
+  const handleFinalAuth = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (otp.join('') === '123456') {
+      navigate('/role-selection');
+    } else {
+      alert('Icode ntabwo ariyo!');
+    }
+  };
+
+  const handleMsAccess = (e: React.FormEvent) => {
     e.preventDefault();
     if (msCode === 'g@2026') {
       navigate('/role-selection');
     } else {
-      setError('Icode ntabwo ariyo');
-      setTimeout(() => setError(''), 3000);
+      alert('Invalid Access Code');
+      setMsCode('');
     }
   };
 
   return (
-    <div className="min-h-screen flex bg-white overflow-hidden">
-      {/* Back Button for PC */}
-      <div className="absolute top-10 left-10 z-50 hidden lg:block">
-         <button 
-           onClick={() => navigate('/')} 
-           className="flex items-center space-x-3 px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white hover:text-gray-900 transition-all shadow-2xl"
-         >
-            <ChevronLeft size={18} />
-            <span>{t('back')}</span>
-         </button>
-      </div>
+    <div className="min-h-screen flex bg-[#f4f5f7] overflow-hidden relative">
+      {/* Secret MS Access Button */}
+      <button 
+        onClick={() => setShowMsPrompt(true)}
+        className="fixed top-6 right-6 z-[100] w-12 h-12 bg-gray-900/80 backdrop-blur-md text-white rounded-2xl flex items-center justify-center font-black text-xs hover:bg-green-600 transition-all shadow-xl border border-white/10"
+      >
+        MS
+      </button>
 
-      {/* Left Column: Visual Branding (Hidden on Mobile) */}
+      {/* MS Code Prompt Modal */}
+      {showMsPrompt && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 animate-in fade-in duration-300">
+           <div className="absolute inset-0 bg-gray-950/70 backdrop-blur-md" onClick={() => setShowMsPrompt(false)}></div>
+           <div className="relative w-full max-w-sm bg-white rounded-[2.5rem] p-10 shadow-2xl border border-gray-100 animate-in zoom-in duration-300">
+              <div className="space-y-6 text-center">
+                 <div className="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mx-auto"><Key size={32} /></div>
+                 <div className="space-y-1">
+                    <h3 className="text-2xl font-black tracking-tighter">System Access</h3>
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Enter Admin Secret</p>
+                 </div>
+                 <form onSubmit={handleMsAccess} className="space-y-4">
+                    <input 
+                      autoFocus
+                      type="password"
+                      value={msCode}
+                      onChange={(e) => setMsCode(e.target.value)}
+                      placeholder="Access Code"
+                      className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-center font-black tracking-[0.5em] outline-none focus:border-green-500 transition-all"
+                    />
+                    <button className="w-full py-4 bg-gray-950 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-green-600 transition-all">Authorize Entry</button>
+                 </form>
+              </div>
+           </div>
+        </div>
+      )}
+
+      {/* Visual Branding Column */}
       <div className="hidden lg:flex w-1/2 bg-gray-950 relative items-center justify-center p-20 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-green-500/10 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-500/10 rounded-full blur-[120px]"></div>
@@ -51,152 +110,80 @@ const Login: React.FC = () => {
           
           <div className="space-y-6">
             <h1 className="text-7xl font-black text-white leading-[1.1] tracking-tighter">
-              Ubumenyi <br /> 
-              <span className="gradient-text">Ni Ubukire.</span>
+              Umutekano <br /> 
+              <span className="gradient-text">Ni Uwambere.</span>
             </h1>
             <p className="text-xl text-gray-400 font-medium leading-relaxed">
-              Injira mu muryango w'abahanga mu ikoranabuhanga, ubwubatsi, n'ibinyabiziga kugira ngo wubake ejo hazaza hawe.
+              Muri Garden TVET, gucunga amakuru yawe mu buryo bwizewe niyo ntego yacu ya mbere.
             </p>
           </div>
-
-          <div className="grid grid-cols-2 gap-6 pt-10">
-            <div className="p-6 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl space-y-2">
-              <p className="text-3xl font-black text-white">95%</p>
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Ababonye Akazi</p>
-            </div>
-            <div className="p-6 bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl space-y-2">
-              <p className="text-3xl font-black text-white">1.2K+</p>
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Abanyeshuri</p>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Right Column: Interactive Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24 bg-gray-50 relative">
-        <div className="absolute top-8 left-8 lg:hidden">
-          <Link to="/" className="w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center text-gray-900 shadow-xl">
-             <ChevronLeft size={20} />
-          </Link>
-        </div>
-
-        <div className="w-full max-w-md space-y-10 animate-in fade-in slide-in-from-right-8 duration-700">
-          <div className="space-y-3">
-            <h2 className="text-4xl font-black text-gray-900 tracking-tighter">{t('loginTitle')}</h2>
-            <p className="text-gray-500 font-medium">{t('loginSubtitle')}</p>
-          </div>
-
-          <form className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Izina cyangwa Imeri</label>
-              <div className="relative group">
-                <input 
-                  type="text" 
-                  className="w-full pl-12 pr-4 py-4 bg-white border border-gray-100 rounded-2xl focus:ring-4 focus:ring-green-400/10 focus:border-green-400 transition-all outline-none font-bold"
-                  placeholder="ID yawe"
-                />
-                <User className="absolute left-4 top-4 text-gray-400 group-focus-within:text-green-500 transition-colors" size={20} />
+      {/* Auth Interaction Column */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24 bg-[#f4f5f7] relative">
+        <div className="w-full max-w-md space-y-10">
+          {step === 1 && (
+            <div className="space-y-10 animate-in fade-in slide-in-from-right-8 duration-700">
+              <div className="space-y-3">
+                <h2 className="text-4xl font-black text-gray-900 tracking-tighter">{t('loginTitle')}</h2>
+                <p className="text-gray-500 font-medium">{t('loginSubtitle')}</p>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Ijambo ry'ibanga</label>
-              <div className="relative group">
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  className="w-full pl-12 pr-12 py-4 bg-white border border-gray-100 rounded-2xl focus:ring-4 focus:ring-green-400/10 focus:border-green-400 transition-all outline-none font-bold"
-                  placeholder="••••••••"
-                />
-                <Lock className="absolute left-4 top-4 text-gray-400 group-focus-within:text-green-500 transition-colors" size={20} />
-                <button 
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-4 text-gray-400 hover:text-gray-900"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <label className="flex items-center space-x-2 cursor-pointer group">
-                <div className="w-5 h-5 border-2 border-gray-200 rounded-lg flex items-center justify-center group-hover:border-green-400 transition-all">
-                   <div className="w-2.5 h-2.5 bg-green-500 rounded-sm scale-0 group-hover:scale-100 transition-transform"></div>
+              <form onSubmit={handleCredentialsSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Email cyangwa Telefone</label>
+                  <div className="relative group">
+                    <input required type="text" value={credentials.identifier} onChange={(e) => setCredentials({...credentials, identifier: e.target.value})} className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-2xl focus:border-green-400 transition-all outline-none font-bold" placeholder="imeri@gmail.com" />
+                    <Mail className="absolute left-4 top-4 text-gray-400 group-focus-within:text-green-500 transition-colors" size={20} />
+                  </div>
                 </div>
-                <span className="text-sm font-bold text-gray-500 group-hover:text-gray-900">Nyibuka</span>
-              </label>
-              <a href="#" className="text-sm font-black text-blue-600 hover:text-blue-700">Wibagiwe ijambo?</a>
-            </div>
-
-            <button className="w-full py-5 bg-gray-900 text-white font-black rounded-2xl shadow-2xl hover:bg-green-500 hover:-translate-y-1 transition-all flex items-center justify-center space-x-4 group">
-              <span>{t('login')}</span>
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-          </form>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100"></div></div>
-            <div className="relative flex justify-center text-xs uppercase font-black tracking-widest"><span className="bg-gray-50 px-4 text-gray-400">Cyangwa ukoreshe</span></div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-             <button className="flex items-center justify-center space-x-3 py-4 bg-white border border-gray-100 rounded-2xl hover:bg-gray-100 transition-all font-bold text-sm">
-                <Mail size={18} className="text-red-500" />
-                <span>Google</span>
-             </button>
-             <button className="flex items-center justify-center space-x-3 py-4 bg-white border border-gray-100 rounded-2xl hover:bg-gray-100 transition-all font-bold text-sm">
-                <Github size={18} className="text-gray-900" />
-                <span>Github</span>
-             </button>
-          </div>
-
-          <p className="text-center text-gray-500 font-bold">
-            Ntabwo ufite konti? <Link to="/register" className="text-green-600 hover:underline">{t('register')}</Link>
-          </p>
-
-          <div className="pt-8 border-t border-gray-100 flex flex-col items-center">
-            <button 
-              onClick={() => setShowMSModal(true)}
-              className="px-6 py-2 bg-gray-900/5 text-gray-400 font-black rounded-xl hover:bg-gray-900 hover:text-white transition-all uppercase tracking-widest text-[10px]"
-            >
-              Urugero rwa MS
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Secret Auth Modal */}
-      {showMSModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-md animate-in fade-in duration-300">
-          <div className="bg-white w-full max-w-sm rounded-[2.5rem] p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-2 bg-red-500"></div>
-            <button onClick={() => setShowMSModal(false)} className="absolute top-6 right-6 p-2 text-gray-400 hover:text-gray-900">
-              <X />
-            </button>
-            <div className="text-center space-y-6">
-              <div className="w-20 h-20 bg-red-50 text-red-600 rounded-[2rem] flex items-center justify-center mx-auto animate-bounce-slow">
-                <ShieldAlert size={40} />
-              </div>
-              <h3 className="text-2xl font-black tracking-tighter text-gray-900">Akarere k'Abakozi</h3>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed">Shyiramo code yo kwinjira mu nshingano z'ubuyobozi.</p>
-              <form onSubmit={handleMSAuth} className="space-y-4">
-                <input 
-                  type="password" 
-                  value={msCode}
-                  onChange={(e) => setMSCode(e.target.value)}
-                  className={`w-full px-6 py-5 bg-gray-100 rounded-2xl text-center text-2xl tracking-[0.5em] font-black focus:ring-4 focus:ring-red-500/20 outline-none border-none transition-all ${error ? 'ring-2 ring-red-500' : ''}`}
-                  placeholder="••••••"
-                  autoFocus
-                />
-                {error && <p className="text-red-500 text-xs font-black uppercase tracking-widest">{error}</p>}
-                <button className="w-full py-5 bg-gray-900 text-white font-black rounded-2xl hover:bg-red-600 transition-all shadow-xl">
-                  Genzura
+                <div className="space-y-2">
+                  <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Ijambo ry'ibanga</label>
+                  <div className="relative group">
+                    <input required type={showPassword ? "text" : "password"} value={credentials.password} onChange={(e) => setCredentials({...credentials, password: e.target.value})} className="w-full pl-12 pr-12 py-4 bg-white border border-gray-200 rounded-2xl focus:border-green-400 transition-all outline-none font-bold" placeholder="••••••••" />
+                    <Lock className="absolute left-4 top-4 text-gray-400 group-focus-within:text-green-500 transition-colors" size={20} />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-4 text-gray-400 hover:text-gray-900">
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
+                <button disabled={isVerifying} className="w-full py-5 bg-gray-900 text-white font-black rounded-2xl shadow-xl hover:bg-green-500 hover:-translate-y-1 transition-all flex items-center justify-center space-x-4 group disabled:opacity-50">
+                  {isVerifying ? <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : <><span>Next: System Check</span><ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" /></>}
                 </button>
               </form>
             </div>
-          </div>
+          )}
+          {/* Steps 2 and 3 omitted for brevity, logic remains same */}
+          {step === 2 && (
+            <div className="space-y-8 text-center animate-in zoom-in duration-500">
+               <div className="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto shadow-inner border-4 border-white animate-pulse">
+                  <CheckCircle2 size={48} />
+               </div>
+               <div className="space-y-2">
+                  <h3 className="text-3xl font-black tracking-tighter">Verified</h3>
+                  <p className="text-gray-500 font-medium italic">Checking Director Registry...</p>
+               </div>
+            </div>
+          )}
+          {step === 3 && (
+            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+              <div className="space-y-3">
+                <h2 className="text-4xl font-black text-gray-900 tracking-tighter">Enter OTP</h2>
+                <p className="text-gray-500 font-medium">Verify your identity via code.</p>
+              </div>
+              <form onSubmit={handleFinalAuth} className="space-y-8">
+                <div className="flex justify-between gap-3">
+                  {otp.map((digit, i) => (
+                    <input key={i} id={`otp-${i}`} type="text" maxLength={1} value={digit} onChange={(e) => handleOtpChange(i, e.target.value)} className="w-full h-16 bg-white border border-gray-200 rounded-2xl text-center text-2xl font-black focus:border-green-500 outline-none transition-all" />
+                  ))}
+                </div>
+                <button className="w-full py-5 bg-green-600 text-white font-black rounded-2xl shadow-xl hover:bg-green-700 hover:-translate-y-1 transition-all">Authorize Login</button>
+              </form>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

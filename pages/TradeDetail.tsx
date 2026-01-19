@@ -131,6 +131,49 @@ const TradeDetail: React.FC = () => {
           </div>
         )}
 
+        {/* Deep Dive / Curriculum Tab */}
+        {activeTab === 'deepdive' && (
+          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 space-y-12">
+             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {trade.levels.map((level) => (
+                  <button 
+                    key={level.id}
+                    onClick={() => setSelectedLevel(level.id)}
+                    className={`p-8 lg:p-12 text-left rounded-[2rem] lg:rounded-[3rem] transition-all border-4 ${
+                      selectedLevel === level.id 
+                      ? 'bg-gray-950 text-white border-green-500 shadow-2xl' 
+                      : 'bg-white text-gray-900 border-gray-50 hover:border-gray-200'
+                    }`}
+                  >
+                    <p className="text-[10px] font-black uppercase tracking-widest mb-4 opacity-60">Year of Study</p>
+                    <h4 className="text-2xl lg:text-4xl font-black tracking-tighter mb-4">{level.name}</h4>
+                    <p className={`text-sm lg:text-lg font-semibold leading-relaxed ${selectedLevel === level.id ? 'text-gray-400' : 'text-gray-500'}`}>
+                      {level.description}
+                    </p>
+                  </button>
+                ))}
+             </div>
+             {selectedLevel && (
+               <div className="bg-gray-50 p-8 lg:p-20 rounded-[3rem] lg:rounded-[6rem] space-y-12 animate-in fade-in duration-500">
+                  <div className="flex items-center justify-between">
+                     <h5 className="text-3xl lg:text-6xl font-black tracking-tighter">Core Modules</h5>
+                     <div className="w-16 h-16 lg:w-24 lg:h-24 bg-white rounded-3xl flex items-center justify-center text-green-600 shadow-xl">
+                        <BookOpen size={40} />
+                     </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-8">
+                     {trade.coreModules.map((module, idx) => (
+                       <div key={idx} className="flex items-center space-x-6 p-6 lg:p-10 bg-white rounded-[1.5rem] lg:rounded-[2.5rem] shadow-sm border border-white">
+                          <span className="text-3xl lg:text-5xl font-black text-gray-100">0{idx + 1}</span>
+                          <span className="text-base lg:text-2xl font-black text-gray-900">{module}</span>
+                       </div>
+                     ))}
+                  </div>
+               </div>
+             )}
+          </div>
+        )}
+
         {/* Workshop Tab */}
         {activeTab === 'ibikoresho' && (
           <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 px-4 lg:px-0">
@@ -157,6 +200,34 @@ const TradeDetail: React.FC = () => {
                  </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Quiz Tab */}
+        {activeTab === 'quiz' && (
+          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 max-w-4xl mx-auto py-12 lg:py-24 space-y-12 text-center">
+             {!quizFinished ? (
+               <>
+                 <div className="space-y-6">
+                    <h3 className="text-4xl lg:text-7xl font-black tracking-tighter">Isuzume Umwuga.</h3>
+                    <p className="text-lg lg:text-2xl text-gray-500 font-semibold max-w-2xl mx-auto">Simbuka mu isuzuma rito urebe niba uyu mwuga ujuganye n'impano yawe.</p>
+                 </div>
+                 <div className="p-10 lg:p-20 bg-gray-50 rounded-[3rem] lg:rounded-[5rem] space-y-10 border border-gray-100">
+                    <p className="text-xl lg:text-4xl font-black text-gray-900 leading-tight">"Ese ukunda gukemura ibibazo bikomeye ukoresheje mudasobwa cyangwa ibikoresho bifatika?"</p>
+                    <div className="flex flex-col sm:flex-row justify-center gap-6">
+                       <button onClick={() => setQuizFinished(true)} className="px-12 py-6 lg:px-20 lg:py-8 bg-green-600 text-white rounded-[2rem] font-black text-lg lg:text-2xl shadow-xl hover:-translate-y-1 transition-all">Cyane cyane</button>
+                       <button onClick={() => setQuizFinished(true)} className="px-12 py-6 lg:px-20 lg:py-8 bg-white border-2 border-gray-200 text-gray-900 rounded-[2rem] font-black text-lg lg:text-2xl shadow-sm hover:border-gray-900 transition-all">Biterwa na moko</button>
+                    </div>
+                 </div>
+               </>
+             ) : (
+               <div className="space-y-10 animate-in zoom-in duration-700">
+                  <div className="w-24 h-24 lg:w-40 lg:h-40 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto shadow-inner"><Star size={64} fill="currentColor" /></div>
+                  <h3 className="text-4xl lg:text-7xl font-black tracking-tighter">Urashoboye!</h3>
+                  <p className="text-lg lg:text-2xl text-gray-500 font-semibold">Impano yawe ihuye neza na {trade.name}. Turagutegereje!</p>
+                  <button onClick={() => setQuizFinished(false)} className="px-10 py-5 bg-gray-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-600 transition-all">Ongera ugerageze</button>
+               </div>
+             )}
           </div>
         )}
 

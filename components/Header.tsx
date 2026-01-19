@@ -80,7 +80,7 @@ const Header: React.FC = () => {
             <nav className={`hidden xl:flex items-center space-x-1 p-1.5 rounded-[2rem] border transition-all duration-700 ${
               scrolled ? 'bg-gray-100/30 border-gray-200' : 'bg-white/10 border-white/20 backdrop-blur-3xl shadow-2xl'
             }`}>
-              {['home', 'sports', 'services', 'trades', 'support'].map((item) => (
+              {['home', 'about', 'sports', 'services', 'trades', 'support'].map((item) => (
                 <Link
                   key={item}
                   to={`/${item === 'home' ? '' : item}`}
@@ -125,7 +125,7 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Floating Interactive Search Bar (Non-Fullscreen) */}
+      {/* Floating Interactive Search Bar */}
       {isSearchOpen && (
         <div className="fixed inset-0 z-[200] flex items-start justify-center pt-[15vh] px-4 animate-in fade-in duration-300">
            <div className="absolute inset-0 bg-gray-950/40 backdrop-blur-sm" onClick={() => setIsSearchOpen(false)}></div>
@@ -153,18 +153,6 @@ const Header: React.FC = () => {
                    </button>
                 </div>
               </form>
-              
-              <div className="mt-6 px-4 pb-4 space-y-4">
-                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('reports')}</p>
-                 <div className="grid grid-cols-2 gap-3">
-                    {['SOD', 'BDC', 'AUTO', 'Sports'].map(tag => (
-                      <button key={tag} className="flex items-center space-x-3 p-4 bg-gray-50 rounded-2xl hover:bg-green-50 transition-colors group">
-                         <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-gray-400 group-hover:text-green-500 shadow-sm transition-all"><Zap size={14} /></div>
-                         <span className="text-sm font-black text-gray-600 group-hover:text-gray-900">{tag}</span>
-                      </button>
-                    ))}
-                 </div>
-              </div>
            </div>
         </div>
       )}
