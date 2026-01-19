@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { 
   UserCheck, GraduationCap, ClipboardList, Book, Calculator, Package, 
   Settings, ShieldCheck, ChevronRight, ChevronLeft, Search, Info, Activity, Fingerprint,
-  Plus, X, Shield, Lock, Eye, CheckCircle2, MoreHorizontal, Layout, Zap, Users
+  Plus, X, Shield, Lock, Eye, CheckCircle2, MoreHorizontal, Layout, Zap, Users,
+  Heart
 } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
 
@@ -25,6 +26,7 @@ const initialRoles: Role[] = [
   { id: 'teacher', name: 'Teacher', icon: Book, color: 'bg-green-600', users: 24, perms: ['Grade Management', 'Student Logs', 'Material Share'], detailedPerms: ['Mark Attendance', 'Submit Marks', 'Upload Lessons', 'Message Students', 'Track Module Progress'] },
   { id: 'acc', name: 'Accountant', icon: Calculator, color: 'bg-yellow-600', users: 3, perms: ['Fees Collection', 'Payroll', 'Expense Tracking'], detailedPerms: ['Invoice Printing', 'Payment Reconciliation', 'Manage Petty Cash', 'Salary Processing', 'Tax Compliance Reports'] },
   { id: 'stock', name: 'Stock Manager', icon: Package, color: 'bg-orange-600', users: 1, perms: ['Inventory Flow', 'Procurement', 'Workshop Tools'], detailedPerms: ['Asset Tracking', 'Requisition Approval', 'Inventory Audit', 'Supplier Liaison', 'Tool Maintenance Logs'] },
+  { id: 'parent', name: 'Parent / Guardian', icon: Heart, color: 'bg-pink-600', users: 150, perms: ['Child Academic Tracking', 'Discipline Alerts', 'Fee Status'], detailedPerms: ['View Child Performance', 'Receive Discipline Alerts', 'Check Fee Balance', 'Contact Teachers', 'Review School Announcements'] },
   { id: 'admin', name: 'Admin', icon: Settings, color: 'bg-gray-900', users: 1, perms: ['Full Access', 'Database Mgmt', 'Security Protocols'], detailedPerms: ['User Provisioning', 'System Logs', 'Database Backups', 'API Configuration', 'Role Customization'] },
 ];
 
@@ -186,7 +188,7 @@ const RoleSelection: React.FC = () => {
                 </div>
                 <button 
                   onClick={() => setIsAdminMode(!isAdminMode)}
-                  className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${isAdminMode ? 'bg-red-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-400 hover:text-gray-900 shadow-sm'}`}
+                  className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${isAdminMode ? 'bg-red-600 text-white shadow-lg' : 'bg-white border border-gray-200 text-gray-400 hover:text-gray-950 shadow-sm'}`}
                 >
                   {isAdminMode ? 'Admin Control Active' : 'Enable Dev Mode'}
                 </button>

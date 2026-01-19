@@ -12,6 +12,7 @@ const DODDashboard = lazy(() => import('./dashboards/DODDashboard'));
 const TeacherDashboard = lazy(() => import('./dashboards/TeacherDashboard'));
 const StockManagerDashboard = lazy(() => import('./dashboards/StockManagerDashboard'));
 const HeadMasterDashboard = lazy(() => import('./dashboards/HeadMasterDashboard'));
+const ParentDashboard = lazy(() => import('./dashboards/ParentDashboard'));
 
 const Dashboard: React.FC = () => {
   const { role } = useParams();
@@ -32,6 +33,7 @@ const Dashboard: React.FC = () => {
       case 'teacher': return <TeacherDashboard />;
       case 'stock': return <StockManagerDashboard />;
       case 'hm': return <HeadMasterDashboard />;
+      case 'parent': return <ParentDashboard />;
       default: return (
         <div className="h-full flex items-center justify-center p-20 text-center flex-col space-y-6">
           <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center text-gray-300"><Shield size={40} /></div>
