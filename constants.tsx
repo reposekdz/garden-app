@@ -159,7 +159,14 @@ export const TRANSLATIONS: Record<Language, any> = {
     finance: "Financial Mgmt",
     students: "My Students",
     news: "Campus News & Events",
-    back: "Go Back"
+    back: "Go Back",
+    lessonPlanner: "Lesson Planner",
+    createLesson: "Create New Lesson",
+    title: "Title",
+    date: "Date",
+    time: "Time",
+    class: "Class",
+    status: "Status"
   },
   fr: {
     welcome: "Construisez votre avenir à Garden TVET",
@@ -198,7 +205,14 @@ export const TRANSLATIONS: Record<Language, any> = {
     finance: "Gestion Financière",
     students: "Mes Étudiants",
     news: "Nouvelles du Campus",
-    back: "Retour"
+    back: "Retour",
+    lessonPlanner: "Planificateur de leçons",
+    createLesson: "Créer une nouvelle leçon",
+    title: "Titre",
+    date: "Date",
+    time: "Heure",
+    class: "Classe",
+    status: "Statut"
   },
   sw: {
     welcome: "Jenga Hatima yako katika Garden TVET",
@@ -237,7 +251,14 @@ export const TRANSLATIONS: Record<Language, any> = {
     finance: "Usimamizi wa Fedha",
     students: "Wanafunzi Wangu",
     news: "Habari za Chuo",
-    back: "Rudi Nyuma"
+    back: "Rudi Nyuma",
+    lessonPlanner: "Mpangaji wa Somo",
+    createLesson: "Unda Somo Jipya",
+    title: "Kichwa",
+    date: "Tarehe",
+    time: "Saa",
+    class: "Darasa",
+    status: "Hali"
   },
   rw: {
     welcome: "Wubake Ejo Hazaza muri Garden TVET",
@@ -276,6 +297,13 @@ export const TRANSLATIONS: Record<Language, any> = {
     finance: "Imari",
     students: "Abanyeshuri banjye",
     news: "Amakuru y'Ishuri",
-    back: "Gusubira Inyuma"
+    back: "Gusubira Inyuma",
+    lessonPlanner: "Gupanga Amasomo",
+    createLesson: "Tangiza Isomo Rishya",
+    title: "Izina ry'Isomo",
+    date: "Itariki",
+    time: "Isaha",
+    class: "Ishuri",
+    status: "Imiterere"
   }
 };

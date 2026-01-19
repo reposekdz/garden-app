@@ -4,10 +4,10 @@ import {
   Book, PenTool, Layout, Users, FileText, Star, 
   Search, Bell, Plus, ChevronRight, MessageSquare, StarHalf, Monitor, BookOpen, UserCheck,
   Filter, ArrowUpRight, GraduationCap, Clock, MoreHorizontal, X, Phone, Mail, User, ShieldCheck,
-  Activity, Calendar, BarChart3, Clipboard
+  Activity, Calendar, BarChart3, Clipboard, UploadCloud, CheckCircle, Save
 } from 'lucide-react';
 import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, AreaChart, Area
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, AreaChart, Area, LineChart, Line
 } from 'recharts';
 import { useLanguage } from '../../components/LanguageContext';
 
@@ -27,10 +27,49 @@ interface Student {
   modules: { name: string; score: number }[];
 }
 
+interface Lesson {
+  id: string;
+  title: string;
+  time: string;
+  class: string;
+  status: 'Draft' | 'Ready' | 'Reviewing';
+}
+
 const TeacherDashboard: React.FC = () => {
   const { t } = useLanguage();
   const [studentSearch, setStudentSearch] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [isGradingOpen, setIsGradingOpen] = useState(false);
+  const [isLessonModalOpen, setIsLessonModalOpen] = useState(false);
+  
+  // Lesson Planner state
+  const [lessons, setLessons] = useState<Lesson[]>([
+    { id: '1', title: 'React State Management', time: 'Tomorrow, 08:30', class: 'SOD 5C', status: 'Draft' },
+    { id: '2', title: 'Database Normalization', time: 'Wednesday, 10:45', class: 'SOD 4B', status: 'Ready' },
+    { id: '3', title: 'UI UX Prototyping', time: 'Friday, 14:00', class: 'SOD 3A', status: 'Reviewing' }
+  ]);
+
+  const [newLesson, setNewLesson] = useState<Partial<Lesson>>({
+    title: '',
+    time: '',
+    class: 'SOD 5C',
+    status: 'Draft'
+  });
+
+  const handleAddLesson = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newLesson.title || !newLesson.time) return;
+    const lesson: Lesson = {
+      id: Date.now().toString(),
+      title: newLesson.title,
+      time: newLesson.time,
+      class: newLesson.class || 'SOD 5C',
+      status: (newLesson.status as any) || 'Draft'
+    };
+    setLessons([lesson, ...lessons]);
+    setIsLessonModalOpen(false);
+    setNewLesson({ title: '', time: '', class: 'SOD 5C', status: 'Draft' });
+  };
   
   const classStats = [
     { name: 'SOD 3A', students: 45, avg: 82 },
@@ -92,13 +131,91 @@ const TeacherDashboard: React.FC = () => {
           <p className="text-gray-400 font-medium ml-16">Mwarimu - My Classes & Students</p>
         </div>
         <div className="flex items-center space-x-4">
-          <button className="flex items-center space-x-3 px-8 py-4 bg-green-500 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-600 transition-all shadow-xl shadow-green-500/20">
+          <button 
+            onClick={() => setIsGradingOpen(true)}
+            className="flex items-center space-x-3 px-8 py-4 bg-gray-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-500 transition-all shadow-xl"
+          >
+             <UploadCloud size={18} />
+             <span>Injiza Amanota (Grades)</span>
+          </button>
+          <button 
+            onClick={() => setIsLessonModalOpen(true)}
+            className="flex items-center space-x-3 px-8 py-4 bg-green-500 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-600 transition-all shadow-xl shadow-green-500/20">
              <Plus size={18} />
-             <span>Tanga Ikoroshwa (Test)</span>
+             <span>{t('createLesson')}</span>
           </button>
         </div>
       </header>
 
+      {/* Lesson Creation Modal */}
+      {isLessonModalOpen && (
+        <div className="fixed inset-0 z-[250] flex items-center justify-center p-4 bg-gray-950/80 backdrop-blur-md animate-in fade-in duration-300">
+           <div className="bg-white w-full max-w-xl rounded-[3rem] p-10 shadow-2xl space-y-8 animate-in slide-in-from-top-12 duration-500">
+              <div className="flex justify-between items-center">
+                 <h2 className="text-3xl font-black tracking-tighter">{t('createLesson')}</h2>
+                 <button onClick={() => setIsLessonModalOpen(false)} className="p-3 bg-gray-100 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all"><X size={20} /></button>
+              </div>
+              <form onSubmit={handleAddLesson} className="space-y-6">
+                 <div className="space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('title')}</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={newLesson.title}
+                      onChange={(e) => setNewLesson({...newLesson, title: e.target.value})}
+                      className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:border-green-500" 
+                      placeholder="e.g. Introduction to TypeScript"
+                    />
+                 </div>
+                 <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('time')}</label>
+                       <input 
+                        type="text" 
+                        required
+                        value={newLesson.time}
+                        onChange={(e) => setNewLesson({...newLesson, time: e.target.value})}
+                        className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:border-green-500" 
+                        placeholder="e.g. Monday, 10:00"
+                       />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('class')}</label>
+                       <select 
+                        value={newLesson.class}
+                        onChange={(e) => setNewLesson({...newLesson, class: e.target.value})}
+                        className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:border-green-500"
+                       >
+                          <option>SOD 5C</option>
+                          <option>SOD 4B</option>
+                          <option>SOD 3A</option>
+                       </select>
+                    </div>
+                 </div>
+                 <div className="space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{t('status')}</label>
+                    <select 
+                      value={newLesson.status}
+                      onChange={(e) => setNewLesson({...newLesson, status: e.target.value as any})}
+                      className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:border-green-500"
+                    >
+                       <option value="Draft">Draft</option>
+                       <option value="Ready">Ready</option>
+                       <option value="Reviewing">Reviewing</option>
+                    </select>
+                 </div>
+                 <div className="flex justify-end pt-4">
+                    <button type="submit" className="px-10 py-5 bg-green-500 text-white font-black rounded-2xl uppercase tracking-widest text-xs flex items-center space-x-3 shadow-xl hover:bg-green-600 transition-all">
+                       <Save size={18} />
+                       <span>{t('save')}</span>
+                    </button>
+                 </div>
+              </form>
+           </div>
+        </div>
+      )}
+
+      {/* Dashboard Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
         {[
           { label: 'Assigned Classes', value: '3', sub: 'Active', icon: Layout, color: 'text-blue-500' },
@@ -120,49 +237,50 @@ const TeacherDashboard: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-        {/* Performance Bar Chart */}
         <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
-           <h4 className="text-2xl font-black tracking-tighter">Class Performance Overview</h4>
+           <h4 className="text-2xl font-black tracking-tighter">Student Progress Trends</h4>
            <div className="h-[350px]">
              <ResponsiveContainer width="100%" height="100%">
-               <BarChart data={classStats}>
+               <LineChart data={classStats}>
                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12, fontWeight: 900}} />
                  <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{borderRadius: '1.5rem'}} />
-                 <Bar dataKey="avg" radius={[10, 10, 0, 0]} fill="#3b82f6" />
-               </BarChart>
+                 <Line type="monotone" dataKey="avg" stroke="#3b82f6" strokeWidth={4} dot={{ r: 6, fill: '#3b82f6' }} />
+               </LineChart>
              </ResponsiveContainer>
            </div>
         </div>
 
-        {/* Lesson Planner (NEW SECTION) */}
         <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
            <div className="flex justify-between items-center">
-              <h4 className="text-2xl font-black tracking-tighter">Lesson Planner</h4>
-              <button className="p-3 bg-gray-50 rounded-xl text-gray-400 hover:text-green-500 transition-colors"><Plus size={18} /></button>
+              <h4 className="text-2xl font-black tracking-tighter">{t('lessonPlanner')}</h4>
+              <button 
+                onClick={() => setIsLessonModalOpen(true)}
+                className="p-3 bg-gray-50 rounded-xl text-gray-400 hover:text-green-500 transition-colors"><Plus size={18} /></button>
            </div>
            <div className="space-y-4 max-h-[350px] overflow-y-auto custom-scrollbar pr-4">
-              {[
-                { title: 'React State Management', time: 'Tomorrow, 08:30', class: 'SOD 5C', status: 'Draft' },
-                { title: 'Database Normalization', time: 'Wednesday, 10:45', class: 'SOD 4B', status: 'Ready' },
-                { title: 'UI UX Prototyping', time: 'Friday, 14:00', class: 'SOD 3A', status: 'Reviewing' }
-              ].map((plan, i) => (
-                <div key={i} className="p-6 bg-gray-50 rounded-3xl flex items-center justify-between group hover:bg-gray-950 hover:text-white transition-all">
+              {lessons.map((plan, i) => (
+                <div key={i} className="p-6 bg-gray-50 rounded-3xl flex items-center justify-between group hover:bg-gray-950 hover:text-white transition-all animate-in fade-in duration-500">
                    <div className="space-y-1">
                       <p className="text-lg font-black tracking-tight leading-none">{plan.title}</p>
-                      <div className="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-gray-500">
+                      <div className="flex items-center space-x-3 text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:text-gray-400">
                          <Clock size={12} />
                          <span>{plan.time} • {plan.class}</span>
                       </div>
                    </div>
-                   <span className="px-3 py-1 bg-white/10 rounded-full text-[9px] font-black uppercase tracking-widest">{plan.status}</span>
+                   <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                     plan.status === 'Ready' ? 'bg-green-100 text-green-600' : 
+                     plan.status === 'Reviewing' ? 'bg-orange-100 text-orange-600' : 
+                     'bg-gray-200 text-gray-600'
+                   } group-hover:bg-white/10 group-hover:text-white transition-all`}>
+                     {plan.status}
+                   </span>
                 </div>
               ))}
            </div>
         </div>
       </div>
 
-      {/* Student Management Section */}
       <section className="bg-white p-12 lg:p-16 rounded-[4rem] border border-gray-100 shadow-sm space-y-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
            <div className="space-y-2">
@@ -181,7 +299,7 @@ const TeacherDashboard: React.FC = () => {
                  <Search className="absolute left-4 top-4 text-gray-400 group-focus-within:text-green-500" size={18} />
               </div>
               <button className="p-4 bg-gray-50 border border-gray-100 rounded-2xl text-gray-400 hover:text-gray-950 transition-all"><Filter size={20} /></button>
-        </div>
+           </div>
         </div>
 
         <div className="overflow-x-auto custom-scrollbar pb-4">

@@ -1,9 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ClipboardList, UserCheck, ShieldAlert, Activity, Star, 
   Search, Bell, Filter, Plus, ChevronRight, MessageSquare, Shield,
-  History, UserX
+  History, UserX, MapPin, Check, X, FileCheck
 } from 'lucide-react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -13,6 +13,8 @@ import { useLanguage } from '../../components/LanguageContext';
 
 const DODDashboard: React.FC = () => {
   const { t } = useLanguage();
+  const [activeTab, setActiveTab] = useState<'attendance' | 'passes'>('attendance');
+  
   const attendanceData = [
     { day: 'Mon', rate: 95 },
     { day: 'Tue', rate: 98 },
@@ -59,34 +61,64 @@ const DODDashboard: React.FC = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-        <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+        <div className="xl:col-span-2 bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
            <div className="flex justify-between items-center">
              <h4 className="text-2xl font-black tracking-tighter">Attendance Variance</h4>
-             <div className="flex space-x-2">
-                <span className="w-3 h-3 bg-red-500 rounded-full"></span>
-                <span className="text-[10px] font-black uppercase text-gray-400">Daily Rate</span>
+             <div className="flex space-x-4">
+                <button onClick={() => setActiveTab('attendance')} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'attendance' ? 'bg-gray-950 text-white' : 'text-gray-400 hover:text-gray-600'}`}>Overview</button>
+                <button onClick={() => setActiveTab('passes')} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'passes' ? 'bg-gray-950 text-white' : 'text-gray-400 hover:text-gray-600'}`}>Gate Passes</button>
              </div>
            </div>
-           <div className="h-[400px]">
-             <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={attendanceData}>
-                   <defs>
-                      <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.1}/>
-                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-                      </linearGradient>
-                   </defs>
-                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                   <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 900}} />
-                   <Tooltip contentStyle={{borderRadius: '1.5rem', border: 'none'}} />
-                   <Area type="monotone" dataKey="rate" stroke="#ef4444" strokeWidth={4} fill="url(#colorRate)" />
-                </AreaChart>
-             </ResponsiveContainer>
-           </div>
+           
+           {activeTab === 'attendance' ? (
+             <div className="h-[400px] animate-in fade-in duration-500">
+               <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={attendanceData}>
+                     <defs>
+                        <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.1}/>
+                          <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                        </linearGradient>
+                     </defs>
+                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                     <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10, fontWeight: 900}} />
+                     <Tooltip contentStyle={{borderRadius: '1.5rem', border: 'none'}} />
+                     <Area type="monotone" dataKey="rate" stroke="#ef4444" strokeWidth={4} fill="url(#colorRate)" />
+                  </AreaChart>
+               </ResponsiveContainer>
+             </div>
+           ) : (
+             <div className="space-y-4 animate-in slide-in-from-right-8 duration-500">
+                {[
+                  { student: 'Habimana Jean', time: '14:30', reason: 'Medical Checkup', status: 'Pending' },
+                  { student: 'Umuhoza Aline', time: '16:00', reason: 'Family Emergency', status: 'Approved' },
+                  { student: 'Gasana Eric', time: '09:00', reason: 'Bank Visit', status: 'Pending' }
+                ].map((pass, i) => (
+                  <div key={i} className="flex items-center justify-between p-6 bg-gray-50 rounded-3xl border border-gray-100 group hover:border-blue-500 transition-all">
+                     <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-blue-500 shadow-sm"><FileCheck size={20} /></div>
+                        <div>
+                           <p className="font-black text-gray-900">{pass.student}</p>
+                           <p className="text-[10px] font-black text-gray-400 uppercase">{pass.reason} • {pass.time}</p>
+                        </div>
+                     </div>
+                     <div className="flex space-x-2">
+                        {pass.status === 'Pending' ? (
+                          <>
+                            <button className="p-3 bg-white text-green-500 rounded-xl hover:bg-green-500 hover:text-white transition-all shadow-sm"><Check size={18} /></button>
+                            <button className="p-3 bg-white text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm"><X size={18} /></button>
+                          </>
+                        ) : (
+                          <span className="px-3 py-1 bg-green-50 text-green-600 text-[10px] font-black uppercase rounded-full">Authorized</span>
+                        )}
+                     </div>
+                  </div>
+                ))}
+             </div>
+           )}
         </div>
 
-        {/* Incident Logger (NEW) */}
         <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
            <h4 className="text-2xl font-black tracking-tighter">Recent Discipline Logs</h4>
            <div className="space-y-4">
