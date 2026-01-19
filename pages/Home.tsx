@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
-  Zap, Trophy, Award, Rocket, Activity, Code, HardHat, Car, CheckCircle2,
-  Calendar, Clock, ArrowUpRight, Search, PlayCircle
+  Zap, Trophy, Rocket, Activity, Code, HardHat, Car, CheckCircle2,
+  Award, PlayCircle, Star
 } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
 import { TRADES } from '../constants';
@@ -50,72 +50,83 @@ const HeroSlider: React.FC = () => {
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrent((prev) => (prev + 1) % slides.length), 10000);
+    const timer = setInterval(() => setCurrent((prev) => (prev + 1) % slides.length), 8000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
   return (
-    <div className="relative h-[90svh] lg:h-[100svh] w-full overflow-hidden bg-white">
+    <div className="relative h-[100svh] w-full overflow-hidden bg-white">
       {/* Background Images */}
       {slides.map((slide, idx) => (
         <div
           key={idx}
-          className={`absolute inset-0 transition-all duration-[2000ms] ease-out ${idx === current ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'}`}
+          className={`absolute inset-0 transition-all duration-[1500ms] ease-out ${idx === current ? 'opacity-100 scale-100' : 'opacity-0 scale-110 pointer-events-none'}`}
         >
-          <img src={slide.image} className="w-full h-full object-cover brightness-[0.85]" alt={slide.title} />
-          <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-white/95 via-white/40 lg:via-white/50 to-transparent"></div>
+          <img src={slide.image} className="w-full h-full object-cover brightness-[0.7] lg:brightness-[0.9]" alt={slide.title} />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 lg:bg-gradient-to-r lg:from-white/95 lg:via-white/60 lg:to-transparent"></div>
         </div>
       ))}
 
       {/* Hero Content Wrapper */}
-      <div className="absolute inset-0 flex items-center pt-20 lg:pt-0">
-        <div className="container-fluid flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+      <div className="absolute inset-0 flex items-center pt-16 lg:pt-0">
+        <div className="container-fluid flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
           
           {/* Text Content */}
-          <div className="w-full lg:flex-1 space-y-5 sm:space-y-8 lg:space-y-10 text-center lg:text-left animate-in fade-in slide-in-from-left-12 duration-1000">
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 bg-green-100 border border-green-200 rounded-full text-green-700 text-[10px] font-black uppercase tracking-widest mx-auto lg:mx-0">
+          <div className="w-full lg:flex-1 space-y-4 sm:space-y-6 lg:space-y-10 text-center lg:text-left animate-in fade-in slide-in-from-bottom-8 lg:slide-in-from-left-12 duration-1000">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 bg-green-500/20 lg:bg-green-100 border border-green-400/30 lg:border-green-200 rounded-full text-white lg:text-green-700 text-[9px] sm:text-[10px] font-black uppercase tracking-widest mx-auto lg:mx-0">
                <Zap size={14} className="animate-pulse" />
-               <span>RTB - 2024</span>
+               <span>Inyigisho Zemejwe 2024</span>
             </div>
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black text-gray-900 leading-[0.95] tracking-tighter">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl xl:text-8xl font-black text-white lg:text-gray-900 leading-[1.1] lg:leading-[0.95] tracking-tighter text-balance drop-shadow-lg lg:drop-shadow-none">
               {slides[current].title.split(' ').slice(0, -1).join(' ')} <br />
               <span className="gradient-text">{slides[current].title.split(' ').pop()}</span>
             </h1>
-            <p className="text-sm sm:text-lg lg:text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 font-semibold leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-xl text-white/90 lg:text-gray-600 max-w-xl mx-auto lg:mx-0 font-semibold leading-relaxed px-4 lg:px-0 drop-shadow-md lg:drop-shadow-none">
               {slides[current].subtitle}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-              <Link to="/register" className="px-8 py-4 sm:px-10 sm:py-5 bg-green-600 text-white rounded-2xl sm:rounded-[1.5rem] font-black text-base sm:text-lg shadow-xl hover:bg-green-700 transition-all flex items-center justify-center space-x-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 sm:pt-4 px-6 sm:px-0">
+              <Link to="/register" className="px-6 py-4 sm:px-10 sm:py-5 bg-green-600 text-white rounded-xl sm:rounded-[1.5rem] font-black text-sm sm:text-lg shadow-2xl hover:bg-green-700 transition-all flex items-center justify-center space-x-3 active:scale-95">
                 <span>Kwiyandikisha</span>
                 <Rocket size={18} />
               </Link>
-              <button className="px-8 py-4 sm:px-10 sm:py-5 bg-white border-2 border-gray-100 text-gray-900 rounded-2xl sm:rounded-[1.5rem] font-black text-base sm:text-lg transition-all hover:bg-gray-50 shadow-lg">
+              <button className="px-6 py-4 sm:px-10 sm:py-5 bg-white/10 lg:bg-white border-2 border-white/20 lg:border-gray-100 text-white lg:text-gray-900 rounded-xl sm:rounded-[1.5rem] font-black text-sm sm:text-lg backdrop-blur-md transition-all hover:bg-white hover:text-gray-900 shadow-xl">
                 Sura Ishuri
               </button>
             </div>
           </div>
 
-          {/* 2x2 Responsive Grid Navigation */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-6 w-full max-w-[300px] sm:max-w-[450px] lg:max-w-none lg:w-auto animate-in fade-in slide-in-from-right-12 duration-1000">
+          {/* 2x2 Responsive Navigation Grid */}
+          <div className="hidden sm:grid grid-cols-2 gap-4 lg:gap-6 w-full max-w-[320px] lg:max-w-none lg:w-auto animate-in fade-in slide-in-from-bottom-8 lg:slide-in-from-right-12 duration-1000 delay-200">
              {slides.map((slide, i) => (
                <button 
                  key={i} 
                  onClick={() => setCurrent(i)}
-                 className={`group relative aspect-[3/4] w-full lg:w-48 xl:w-64 rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden border-2 sm:border-4 transition-all duration-700 shadow-2xl ${
+                 className={`group relative aspect-[3/4] w-full lg:w-44 xl:w-56 rounded-2xl lg:rounded-[2.5rem] overflow-hidden border-2 lg:border-4 transition-all duration-700 shadow-2xl ${
                    i === current 
-                   ? 'border-green-600 scale-105 shadow-green-600/20' 
-                   : 'border-white/50 opacity-60 hover:opacity-100 hover:scale-105'
+                   ? 'border-green-600 scale-105 shadow-green-600/30' 
+                   : 'border-white/40 opacity-60 hover:opacity-100 hover:scale-105'
                  }`}
                >
                  <img src={slide.tradeImage} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-3 sm:p-6 lg:p-8 space-y-1 sm:space-y-2">
-                    <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center text-white shadow-xl ${slide.color} group-hover:rotate-6 transition-all`}>
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4 lg:p-6 space-y-2">
+                    <div className={`w-8 h-8 lg:w-10 lg:h-10 rounded-xl flex items-center justify-center text-white shadow-xl ${slide.color} group-hover:rotate-6 transition-all`}>
                        <slide.icon size={16} />
                     </div>
-                    <p className="text-[8px] sm:text-[10px] font-black text-white uppercase tracking-widest">{slide.id}</p>
+                    <p className="text-[8px] lg:text-[10px] font-black text-white uppercase tracking-widest">{slide.id}</p>
                  </div>
                </button>
              ))}
+          </div>
+
+          {/* Mobile Only: Progress Dots */}
+          <div className="flex sm:hidden items-center space-x-3 pb-8">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                className={`h-1.5 rounded-full transition-all duration-500 ${i === current ? 'w-8 bg-green-500' : 'w-2 bg-white/40'}`}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -131,53 +142,54 @@ const Home: React.FC = () => {
       <HeroSlider />
 
       {/* Trust & Stats Section */}
-      <section className="bg-white py-20 lg:py-32 border-y border-gray-100">
-        <div className="container-fluid flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12 lg:gap-20 w-full lg:w-auto flex-1">
+      <section className="bg-white py-12 sm:py-20 lg:py-32 border-y border-gray-100">
+        <div className="container-fluid flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-12 lg:gap-20 w-full lg:w-auto flex-1 order-2 lg:order-1">
              {[
-               { val: '20+', label: 'Imyaka' },
-               { val: '1.5k+', label: 'Abanyeshuri' },
+               { val: '20+', label: 'Imyaka Tumaranye' },
+               { val: '1.5k+', label: 'Abanyeshuri Bacu' },
                { val: '98%', label: 'Guhabwa Akazi' },
-               { val: '50+', label: 'Partners' }
+               { val: '50+', label: 'Abafatanyabikorwa' }
              ].map((s, i) => (
-               <div key={i} className="text-center lg:text-left space-y-1 sm:space-y-3">
-                 <p className="text-4xl sm:text-6xl lg:text-7xl font-black gradient-text tracking-tighter leading-none">{s.val}</p>
-                 <p className="text-[9px] sm:text-[11px] lg:text-[13px] font-black text-gray-400 uppercase tracking-widest">{s.label}</p>
+               <div key={i} className="text-center lg:text-left space-y-1 sm:space-y-3 p-4 bg-gray-50 lg:bg-transparent rounded-2xl border border-gray-100 lg:border-none shadow-sm lg:shadow-none">
+                 <p className="text-3xl sm:text-5xl lg:text-7xl font-black gradient-text tracking-tighter leading-none">{s.val}</p>
+                 <p className="text-[8px] sm:text-[10px] lg:text-[13px] font-black text-gray-400 uppercase tracking-widest leading-tight">{s.label}</p>
                </div>
              ))}
           </div>
-          <div className="max-w-xl space-y-4 text-center lg:text-right">
-             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tighter leading-tight">Ubumenyi Buhuye <br /><span className="text-green-600">n'Isoko ry'Umurimo.</span></h2>
-             <p className="text-sm sm:text-base lg:text-lg text-gray-500 font-medium leading-relaxed italic opacity-80">
-               "Twubaka ubushobozi bw'abanyeshuri bacu binyuze mu nyigisho zifatika."
+          <div className="max-w-xl space-y-4 text-center lg:text-right order-1 lg:order-2 px-4">
+             <div className="inline-block px-4 py-1.5 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Our impact</div>
+             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-gray-900 tracking-tighter leading-tight">Ubumenyi Buhuye <br className="hidden sm:block" /><span className="text-green-600">n'Isoko ry'Umurimo.</span></h2>
+             <p className="text-sm sm:text-lg text-gray-500 font-medium leading-relaxed italic opacity-80">
+               "Twubaka ubushobozi bw'abanyeshuri bacu binyuze mu nyigisho zifatika zishingiye ku bikorwa (CBT)."
              </p>
           </div>
         </div>
       </section>
 
-      {/* Trades Exploration - Feature Responsive Grid */}
-      <section id="trades-section" className="py-20 lg:py-32 bg-gray-50/50">
+      {/* Trades Exploration */}
+      <section id="trades-section" className="py-16 sm:py-24 lg:py-40 bg-gray-50/50">
         <div className="container-fluid">
-          <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between mb-16 lg:mb-24 gap-8">
+          <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between mb-12 lg:mb-24 gap-8">
             <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
-              <div className="inline-block px-5 py-1.5 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-[0.4em] rounded-full">Explore Amashami Yacu</div>
-              <h2 className="text-4xl sm:text-6xl lg:text-8xl font-black text-gray-950 tracking-tighter leading-tight lg:leading-[0.85]">Imyuga Ihindura <br /><span className="text-green-600">Ubuzima.</span></h2>
+              <div className="inline-block px-5 py-2 bg-blue-50 text-blue-600 text-[9px] sm:text-[11px] font-black uppercase tracking-[0.4em] rounded-full">Shakisha Amashami Yacu</div>
+              <h2 className="text-3xl sm:text-6xl lg:text-8xl font-black text-gray-950 tracking-tighter leading-[1.1] lg:leading-[0.85]">Imyuga Ihindura <br /><span className="text-green-600">Ubuzima.</span></h2>
             </div>
-            <p className="hidden sm:block text-base lg:text-2xl text-gray-400 font-medium max-w-xl lg:text-right italic">"Hitamo umwuga ujyanye n'impano yawe uyu munsi kugira ngo wubake ejo hazaza."</p>
+            <p className="hidden md:block text-base lg:text-2xl text-gray-400 font-medium max-w-xl lg:text-right italic">"Hitamo umwuga ujyanye n'impano yawe uyu munsi kugira ngo wubake ejo hazaza heza hashoboka."</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-10 lg:gap-16">
             {TRADES.map((trade) => (
               <div 
                 key={trade.id} 
                 onClick={() => navigate(`/trades/${trade.id}`)} 
-                className="group relative bg-white rounded-3xl sm:rounded-[4rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer border border-white"
+                className="group relative bg-white rounded-[2.5rem] sm:rounded-[4rem] overflow-hidden shadow-xl hover:shadow-[0_50px_100px_-30px_rgba(0,0,0,0.15)] transition-all duration-700 cursor-pointer border border-white"
               >
-                <div className="aspect-[4/5] sm:h-[650px] overflow-hidden relative">
+                <div className="aspect-[4/5] sm:h-[500px] lg:h-[650px] overflow-hidden relative">
                   <img src={trade.image} alt={trade.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent lg:from-white lg:via-white/20 lg:to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent lg:from-white/95 lg:via-white/10 lg:to-transparent"></div>
                   
-                  {/* Default Content (Visible on Mobile) */}
+                  {/* Default View (Always visible on mobile, hides on hover desktop) */}
                   <div className="absolute inset-0 p-6 sm:p-12 flex flex-col justify-end lg:group-hover:opacity-0 transition-all duration-500">
                       <div className="space-y-2 sm:space-y-4">
                          <div className="flex items-center space-x-2">
@@ -189,27 +201,27 @@ const Home: React.FC = () => {
                       </div>
                   </div>
 
-                  {/* Hover Details (Large Screens Only for Performance) */}
-                  <div className="hidden lg:flex absolute inset-0 p-12 bg-white/95 backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700 flex-col justify-center space-y-8">
+                  {/* Desktop Hover Detailed View */}
+                  <div className="hidden lg:flex absolute inset-0 p-12 bg-white/95 backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-all duration-1000 flex-col justify-center space-y-8">
                       <div className="flex items-center space-x-6">
-                        <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center text-white shadow-xl"><Award size={32} /></div>
+                        <div className="w-20 h-20 bg-green-600 rounded-[1.8rem] flex items-center justify-center text-white shadow-2xl"><Award size={40} /></div>
                         <div>
-                           <h4 className="text-2xl font-black tracking-tight text-gray-900">RTB Certified</h4>
-                           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Verified Excellence</p>
+                           <h4 className="text-3xl font-black tracking-tight text-gray-900">RTB Certified</h4>
+                           <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Verified Academic Standard</p>
                         </div>
                       </div>
                       <div className="space-y-4">
-                         <p className="text-lg text-gray-600 font-bold leading-relaxed">Wiga gukoresha ibikoresho bigezweho bihuje n'isoko ry'umurimo rya none.</p>
-                         <div className="grid grid-cols-2 gap-3">
+                         <p className="text-lg text-gray-600 font-bold leading-relaxed">Wiga gukoresha ibikoresho bigezweho bihuje n'isoko ry'umurimo rya none mu buryo bw'umwuga.</p>
+                         <div className="grid grid-cols-2 gap-4">
                             {trade.coreModules.slice(0, 4).map((m, i) => (
                                <div key={i} className="flex items-center space-x-2 text-xs font-bold text-gray-500">
-                                  <CheckCircle2 size={14} className="text-green-500" />
+                                  <CheckCircle2 size={16} className="text-green-500" />
                                   <span className="truncate">{m}</span>
                                </div>
                             ))}
                          </div>
                       </div>
-                      <button className="w-full py-5 bg-gray-900 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-green-600 transition-all">Sura Umwuga</button>
+                      <button className="w-full py-6 bg-gray-950 text-white rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-green-600 transition-all shadow-xl">Sura Umwuga</button>
                   </div>
                 </div>
               </div>
@@ -218,37 +230,37 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 lg:py-40 bg-white overflow-hidden relative">
-         <div className="container-fluid flex flex-col lg:flex-row items-center gap-12 lg:gap-24 relative z-10">
-            <div className="flex-1 space-y-6 sm:space-y-10 text-center lg:text-left">
+      {/* Modern CTA */}
+      <section className="py-24 sm:py-32 lg:py-48 bg-white relative overflow-hidden">
+         <div className="container-fluid flex flex-col lg:flex-row items-center gap-16 lg:gap-24 relative z-10">
+            <div className="flex-1 space-y-8 lg:space-y-12 text-center lg:text-left px-4">
                <div className="space-y-4 sm:space-y-6">
-                  <div className="inline-block px-5 py-1.5 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-[0.4em] rounded-full">Inzira y'Ubukire</div>
-                  <h2 className="text-5xl sm:text-7xl lg:text-8xl font-black text-gray-950 tracking-tighter leading-tight lg:leading-[0.85]">Ejo Hazaza Hawe <br /><span className="text-green-600">Hatangiye.</span></h2>
+                  <div className="inline-block px-6 py-2 bg-green-50 text-green-600 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.4em] rounded-full">Inzira y'Iterambere</div>
+                  <h2 className="text-4xl sm:text-7xl lg:text-8xl font-black text-gray-950 tracking-tighter leading-[1.1] lg:leading-[0.85]">Ejo Hazaza Hawe <br /><span className="text-green-600">Hatangiye.</span></h2>
                </div>
-               <p className="text-base sm:text-xl lg:text-2xl text-gray-500 font-medium leading-relaxed max-w-xl italic mx-auto lg:mx-0">
-                 "Uburezi bufite intego niryo shingiro ry'impinduka. Garden TVET iguha imfunguzo zo gufungura imiryango y'ubushobozi bwawe."
+               <p className="text-base sm:text-xl lg:text-2xl text-gray-500 font-medium leading-relaxed max-w-xl italic mx-auto lg:mx-0 px-4 sm:px-0">
+                 "Uburezi bufite intego niryo shingiro ry'impinduka mu muryango. Garden TVET iguha imfunguzo zo gufungura imiryango y'ubushobozi bwawe."
                </p>
                <div className="flex items-center justify-center lg:justify-start gap-8 sm:gap-12 pt-4">
-                  <div className="space-y-1">
-                     <p className="text-3xl sm:text-4xl font-black text-gray-900">100%</p>
+                  <div className="text-center sm:text-left space-y-1">
+                     <p className="text-4xl sm:text-5xl font-black text-gray-900">100%</p>
                      <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Inyigisho Zifatika</p>
                   </div>
-                  <div className="w-px h-10 bg-gray-100"></div>
-                  <div className="space-y-1">
-                     <p className="text-3xl sm:text-4xl font-black text-gray-900">2024</p>
-                     <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Enrollment Open</p>
+                  <div className="w-px h-12 bg-gray-200"></div>
+                  <div className="text-center sm:text-left space-y-1">
+                     <p className="text-4xl sm:text-5xl font-black text-gray-900">2024</p>
+                     <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Imyaka y'Ikizere</p>
                   </div>
                </div>
             </div>
-            <div className="w-full max-w-[500px] lg:w-[600px] aspect-square rounded-[3rem] sm:rounded-[5rem] overflow-hidden shadow-2xl relative rotate-2 hover:rotate-0 transition-all duration-1000">
+            <div className="w-full max-w-[450px] lg:w-[600px] aspect-square rounded-[3rem] sm:rounded-[5rem] overflow-hidden shadow-2xl relative rotate-1 hover:rotate-0 transition-all duration-1000 mx-auto">
                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070" className="w-full h-full object-cover" alt="Graduation" />
-               <div className="absolute inset-0 bg-gradient-to-t from-green-600/60 to-transparent flex items-end p-8 sm:p-16">
-                  <div className="bg-white p-6 sm:p-8 rounded-3xl shadow-2xl flex items-center space-x-4 sm:space-x-6 w-full">
-                     <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-600 text-white rounded-2xl flex items-center justify-center"><Activity size={24} /></div>
+               <div className="absolute inset-0 bg-gradient-to-t from-green-600/70 via-transparent to-transparent flex items-end p-8 sm:p-16">
+                  <div className="bg-white p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl flex items-center space-x-4 sm:space-x-6 w-full animate-fade-in-up">
+                     <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-600 text-white rounded-2xl flex items-center justify-center shrink-0"><Activity size={24} /></div>
                      <div>
-                        <p className="text-base sm:text-xl font-black text-gray-900">Active Campus</p>
-                        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Innovation Hub</p>
+                        <p className="text-lg sm:text-xl font-black text-gray-900 leading-tight">Active Campus</p>
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Innovation Hub</p>
                      </div>
                   </div>
                </div>
