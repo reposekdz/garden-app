@@ -12,7 +12,8 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  // Set default language to Kinyarwanda ('rw')
+  const [language, setLanguage] = useState<Language>('rw');
 
   const t = (key: string) => {
     return TRANSLATIONS[language][key] || key;

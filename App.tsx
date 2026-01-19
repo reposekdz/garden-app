@@ -9,13 +9,14 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import SearchPage from './pages/SearchPage';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import RoleSelection from './pages/RoleSelection';
 import Dashboard from './pages/Dashboard';
 import TradeDetail from './pages/TradeDetail';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
-  const noHeaderFooterRoutes = ['/role-selection'];
+  const noHeaderFooterRoutes = ['/role-selection', '/login', '/register'];
   const isDashboard = location.pathname.startsWith('/dashboard');
   const hideLayout = noHeaderFooterRoutes.includes(location.pathname) || isDashboard;
 
@@ -38,6 +39,7 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/role-selection" element={<RoleSelection />} />
               <Route path="/dashboard/:role" element={<Dashboard />} />
               <Route path="/trades/:id" element={<TradeDetail />} />
@@ -45,7 +47,6 @@ const App: React.FC = () => {
               <Route path="/services" element={<div className="py-20 text-center font-bold">Student Services & Support</div>} />
               <Route path="/contact" element={<div className="py-20 text-center font-bold">Get In Touch with Garden TVET</div>} />
               <Route path="/support" element={<div className="py-20 text-center font-bold">Help Center & Technical Support</div>} />
-              <Route path="/register" element={<div className="py-20 text-center font-bold">Registration Portal - Enrollment Open</div>} />
             </Routes>
           </Suspense>
         </Layout>

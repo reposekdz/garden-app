@@ -185,15 +185,15 @@ const TradeDetail: React.FC = () => {
 
           {activeTab === 'gallery' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
-              {trade.gallery.map((img, idx) => (
+              {trade.gallery.map((item, idx) => (
                 <div 
                   key={idx} 
                   onClick={() => setSelectedImageIndex(idx)}
                   className="group relative h-[30rem] rounded-[4rem] overflow-hidden shadow-2xl border-[12px] border-white cursor-pointer hover:rotate-2 transition-all duration-500 hover:scale-105"
                 >
-                  <img src={img} className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-1000" />
+                  <img src={item.url} className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-1000" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 flex items-end p-12">
-                    <p className="text-white font-black text-2xl tracking-tighter">{trade.name} Focus</p>
+                    <p className="text-white font-black text-2xl tracking-tighter line-clamp-2">{item.caption || `${trade.name} Session`}</p>
                   </div>
                 </div>
               ))}
@@ -204,37 +204,46 @@ const TradeDetail: React.FC = () => {
 
       {/* Light Gallery Modal (Lightbox) */}
       {selectedImageIndex !== null && (
-        <div className="fixed inset-0 z-[100] bg-gray-950/95 backdrop-blur-3xl flex items-center justify-center animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-[100] bg-gray-950/95 backdrop-blur-3xl flex flex-col items-center justify-center animate-in fade-in duration-300">
           <button 
             onClick={() => setSelectedImageIndex(null)}
-            className="absolute top-10 right-10 p-6 bg-white/10 hover:bg-white text-white hover:text-gray-900 rounded-full transition-all z-[110]"
+            className="absolute top-8 right-8 p-5 bg-white/10 hover:bg-white text-white hover:text-gray-900 rounded-full transition-all z-[110]"
           >
             <X size={32} />
           </button>
           
           <button 
             onClick={prevImage}
-            className="absolute left-10 p-6 bg-white/5 hover:bg-white/20 text-white rounded-full transition-all z-[110]"
+            className="absolute left-4 sm:left-10 p-5 bg-white/5 hover:bg-white/20 text-white rounded-full transition-all z-[110]"
           >
-            <ChevronLeft size={48} />
+            {/* Fixed invalid responsive size props by using Tailwind classes */}
+            <ChevronLeft className="w-10 h-10 sm:w-12 sm:h-12" />
           </button>
 
-          <div className="relative max-w-[90vw] max-h-[85vh] overflow-hidden rounded-[3rem] shadow-2xl">
+          <div className="relative w-full max-w-[95vw] sm:max-w-[85vw] max-h-[75vh] flex flex-col items-center">
             <img 
-              src={trade.gallery[selectedImageIndex]} 
-              className="w-full h-full object-contain animate-in zoom-in-95 duration-500" 
+              src={trade.gallery[selectedImageIndex].url} 
+              className="w-full h-full object-contain rounded-[2rem] sm:rounded-[3rem] shadow-2xl animate-in zoom-in-95 duration-500" 
               alt={`Gallery image ${selectedImageIndex + 1}`} 
             />
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 px-10 py-4 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-full text-white font-black text-xl tracking-widest uppercase">
-                {selectedImageIndex + 1} / {trade.gallery.length}
+            
+            {/* Modal Caption Area */}
+            <div className="w-full mt-8 px-6 py-8 bg-white/10 backdrop-blur-3xl border border-white/20 rounded-[2rem] text-center max-w-3xl">
+                <p className="text-white font-medium text-lg sm:text-2xl leading-relaxed">
+                  {trade.gallery[selectedImageIndex].caption}
+                </p>
+                <div className="mt-6 inline-block px-8 py-2 bg-white/10 border border-white/20 rounded-full text-white font-black text-sm tracking-[0.2em] uppercase">
+                    {selectedImageIndex + 1} / {trade.gallery.length}
+                </div>
             </div>
           </div>
 
           <button 
             onClick={nextImage}
-            className="absolute right-10 p-6 bg-white/5 hover:bg-white/20 text-white rounded-full transition-all z-[110]"
+            className="absolute right-4 sm:right-10 p-5 bg-white/5 hover:bg-white/20 text-white rounded-full transition-all z-[110]"
           >
-            <ChevronRight size={48} />
+            {/* Fixed invalid responsive size props by using Tailwind classes */}
+            <ChevronRight className="w-10 h-10 sm:w-12 sm:h-12" />
           </button>
         </div>
       )}

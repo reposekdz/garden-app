@@ -25,6 +25,11 @@ export interface TradeTool {
   icon?: string;
 }
 
+export interface TradeGalleryItem {
+  url: string;
+  caption: string;
+}
+
 export interface Trade {
   id: string;
   name: string;
@@ -33,7 +38,7 @@ export interface Trade {
   image: string;
   levels: TradeLevel[];
   tools: TradeTool[];
-  gallery: string[];
+  gallery: TradeGalleryItem[];
   coreModules: string[];
   careerProspects: string[];
 }
