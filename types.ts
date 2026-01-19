@@ -34,6 +34,8 @@ export interface Trade {
   levels: TradeLevel[];
   tools: TradeTool[];
   gallery: string[];
+  coreModules: string[];
+  careerProspects: string[];
 }
 
 export interface SearchResult {

@@ -21,9 +21,24 @@ export const TRADES: Trade[] = [
       { name: 'SQL Workbench', description: 'Database design and management.' }
     ],
     gallery: [
-      'https://picsum.photos/800/600?random=101',
-      'https://picsum.photos/800/600?random=102',
-      'https://picsum.photos/800/600?random=103'
+      'https://picsum.photos/1200/800?random=101',
+      'https://picsum.photos/1200/800?random=102',
+      'https://picsum.photos/1200/800?random=103',
+      'https://picsum.photos/1200/800?random=104'
+    ],
+    coreModules: [
+      'Data Structures & Algorithms',
+      'Full-stack Web Frameworks',
+      'Cloud Architecture (AWS/GCP)',
+      'Mobile App Development (Native/Cross)',
+      'Cybersecurity Fundamentals'
+    ],
+    careerProspects: [
+      'Full Stack Developer',
+      'DevOps Engineer',
+      'Systems Architect',
+      'Mobile App Specialist',
+      'Quality Assurance Tester'
     ]
   },
   {
@@ -44,9 +59,24 @@ export const TRADES: Trade[] = [
       { name: 'Theodolite', description: 'Advanced surveying and angle measurement.' }
     ],
     gallery: [
-      'https://picsum.photos/800/600?random=201',
-      'https://picsum.photos/800/600?random=202',
-      'https://picsum.photos/800/600?random=203'
+      'https://picsum.photos/1200/800?random=201',
+      'https://picsum.photos/1200/800?random=202',
+      'https://picsum.photos/1200/800?random=203',
+      'https://picsum.photos/1200/800?random=204'
+    ],
+    coreModules: [
+      'Architectural Blueprint Reading',
+      'Structural Analysis & Design',
+      'Sustainable Building Materials',
+      'Plumbing & Electrical Integration',
+      'Construction Project Management'
+    ],
+    careerProspects: [
+      'Site Supervisor',
+      'Structural Consultant',
+      'Masonry Contractor',
+      'Civil Engineering Technician',
+      'Quantity Surveyor'
     ]
   },
   {
@@ -69,9 +99,24 @@ export const TRADES: Trade[] = [
       { name: 'Engine Stand', description: 'Mobile mount for engine disassembly and repair.' }
     ],
     gallery: [
-      'https://picsum.photos/800/600?random=301',
-      'https://picsum.photos/800/600?random=302',
-      'https://picsum.photos/800/600?random=303'
+      'https://picsum.photos/1200/800?random=301',
+      'https://picsum.photos/1200/800?random=302',
+      'https://picsum.photos/1200/800?random=303',
+      'https://picsum.photos/1200/800?random=304'
+    ],
+    coreModules: [
+      'Engine Diagnostics & Repair',
+      'Hybrid & Electric Drive Systems',
+      'Electronic Control Units (ECU)',
+      'Precision Braking Technology',
+      'Advanced Chassis Dynamics'
+    ],
+    careerProspects: [
+      'Auto Workshop Manager',
+      'EV Systems Technician',
+      'Diagnostics Specialist',
+      'Fleet Maintenance Engineer',
+      'Automotive Design Consultant'
     ]
   }
 ];
