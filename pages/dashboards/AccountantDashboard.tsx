@@ -2,14 +2,17 @@
 import React from 'react';
 import { 
   DollarSign, TrendingUp, TrendingDown, Activity, Clock, AlertTriangle, 
-  Search, Bell, Download, Filter, Plus, UserCheck, Calculator, Package, FileText, ChevronRight
+  Search, Bell, Download, Filter, Plus, UserCheck, Calculator, Package, FileText, ChevronRight,
+  Briefcase, CreditCard, PieChart as PieIcon, User
 } from 'lucide-react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, BarChart, Bar 
 } from 'recharts';
+import { useLanguage } from '../../components/LanguageContext';
 
 const AccountantDashboard: React.FC = () => {
+  const { t } = useLanguage();
   const paymentStats = [
     { name: 'Sep', total: 4000, collected: 2400 },
     { name: 'Oct', total: 3000, collected: 3200 },
@@ -32,7 +35,7 @@ const AccountantDashboard: React.FC = () => {
         <div className="space-y-2">
           <div className="flex items-center space-x-4">
             <div className="p-4 bg-white shadow-xl border border-gray-100 rounded-[1.5rem]"><Calculator className="text-gray-950" /></div>
-            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">Financial Mgmt</h1>
+            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">{t('finance')}</h1>
           </div>
           <p className="text-gray-400 font-medium ml-16">Ushinzwe Imari n'Imicungire y'Ishuri</p>
         </div>
@@ -84,17 +87,33 @@ const AccountantDashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Staff Payroll Section (NEW) */}
         <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-8">
-           <h4 className="text-2xl font-black tracking-tighter">Debt by Trade Group</h4>
-           <div className="h-[350px] flex items-center justify-center">
-             <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie data={arrearsData} dataKey="value" innerRadius={80} outerRadius={120} paddingAngle={5}>
-                    {arrearsData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-             </ResponsiveContainer>
+           <div className="flex justify-between items-center">
+              <h4 className="text-2xl font-black tracking-tighter">{t('payroll')}</h4>
+              <button className="px-6 py-2 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">Process All</button>
+           </div>
+           <div className="space-y-4">
+              {[
+                { name: 'Dr. Karasira Peter', role: 'Teacher', amount: '450,000 RWF', status: 'Pending' },
+                { name: 'Mugisha Alice', role: 'DOS', amount: '620,000 RWF', status: 'Approved' },
+                { name: 'Gasana Eric', role: 'Support', amount: '120,000 RWF', status: 'Paid' }
+              ].map((staff, i) => (
+                <div key={i} className="flex items-center justify-between p-6 bg-gray-50 rounded-[2.5rem] hover:shadow-lg transition-all">
+                   <div className="flex items-center space-x-4">
+                      {/* Fixed: Added missing User icon import */}
+                      <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-blue-500"><User size={20} /></div>
+                      <div>
+                         <p className="font-black text-gray-900">{staff.name}</p>
+                         <p className="text-[10px] font-black text-gray-400 uppercase">{staff.role}</p>
+                      </div>
+                   </div>
+                   <div className="text-right">
+                      <p className="font-black text-gray-900">{staff.amount}</p>
+                      <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${staff.status === 'Paid' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'}`}>{staff.status}</span>
+                   </div>
+                </div>
+              ))}
            </div>
         </div>
       </div>

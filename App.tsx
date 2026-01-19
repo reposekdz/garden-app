@@ -7,7 +7,6 @@ import Footer from './components/Footer';
 
 // Pages
 import Home from './pages/Home';
-import SearchPage from './pages/SearchPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import RoleSelection from './pages/RoleSelection';
@@ -37,7 +36,6 @@ const App: React.FC = () => {
           <Suspense fallback={<div className="h-screen flex items-center justify-center font-black text-2xl animate-pulse">Loading Garden TVET...</div>}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/search" element={<SearchPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/role-selection" element={<RoleSelection />} />

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { 
   Lock, User, ShieldAlert, X, ArrowRight, Github, Mail, Eye, EyeOff, 
-  ChevronLeft, Sparkles, ShieldCheck
+  ChevronLeft, Sparkles, ShieldCheck, Home
 } from 'lucide-react';
 import { useLanguage } from '../components/LanguageContext';
 
@@ -27,6 +27,17 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen flex bg-white overflow-hidden">
+      {/* Back Button for PC */}
+      <div className="absolute top-10 left-10 z-50 hidden lg:block">
+         <button 
+           onClick={() => navigate('/')} 
+           className="flex items-center space-x-3 px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white hover:text-gray-900 transition-all shadow-2xl"
+         >
+            <ChevronLeft size={18} />
+            <span>{t('back')}</span>
+         </button>
+      </div>
+
       {/* Left Column: Visual Branding (Hidden on Mobile) */}
       <div className="hidden lg:flex w-1/2 bg-gray-950 relative items-center justify-center p-20 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-green-500/10 rounded-full blur-[120px]"></div>
@@ -71,8 +82,8 @@ const Login: React.FC = () => {
 
         <div className="w-full max-w-md space-y-10 animate-in fade-in slide-in-from-right-8 duration-700">
           <div className="space-y-3">
-            <h2 className="text-4xl font-black text-gray-900 tracking-tighter">Murakaza neza!</h2>
-            <p className="text-gray-500 font-medium">Injira kugira ngo ukomeze urugendo rwawe rw'ubumenyi.</p>
+            <h2 className="text-4xl font-black text-gray-900 tracking-tighter">{t('loginTitle')}</h2>
+            <p className="text-gray-500 font-medium">{t('loginSubtitle')}</p>
           </div>
 
           <form className="space-y-6">
@@ -118,7 +129,7 @@ const Login: React.FC = () => {
             </div>
 
             <button className="w-full py-5 bg-gray-900 text-white font-black rounded-2xl shadow-2xl hover:bg-green-500 hover:-translate-y-1 transition-all flex items-center justify-center space-x-4 group">
-              <span>Injira ubu</span>
+              <span>{t('login')}</span>
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </form>
@@ -140,11 +151,10 @@ const Login: React.FC = () => {
           </div>
 
           <p className="text-center text-gray-500 font-bold">
-            Ntabwo ufite konti? <Link to="/register" className="text-green-600 hover:underline">Kwiyandikisha</Link>
+            Ntabwo ufite konti? <Link to="/register" className="text-green-600 hover:underline">{t('register')}</Link>
           </p>
 
           <div className="pt-8 border-t border-gray-100 flex flex-col items-center">
-            {/* Fix: removed calls to undefined setShowNotifications and showNotifications variables */}
             <button 
               onClick={() => setShowMSModal(true)}
               className="px-6 py-2 bg-gray-900/5 text-gray-400 font-black rounded-xl hover:bg-gray-900 hover:text-white transition-all uppercase tracking-widest text-[10px]"

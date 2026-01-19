@@ -4,8 +4,8 @@ import { useParams, Link } from 'react-router-dom';
 import { 
   LogOut, Settings, Layout, Bell, Search, Mail, Download, ChevronRight 
 } from 'lucide-react';
+import { useLanguage } from '../components/LanguageContext';
 
-// Lazy load role-specific dashboards to keep code clean and performance high
 const AccountantDashboard = lazy(() => import('./dashboards/AccountantDashboard'));
 const DOSDashboard = lazy(() => import('./dashboards/DOSDashboard'));
 const DODDashboard = lazy(() => import('./dashboards/DODDashboard'));
@@ -13,6 +13,7 @@ const TeacherDashboard = lazy(() => import('./dashboards/TeacherDashboard'));
 
 const Dashboard: React.FC = () => {
   const { role } = useParams();
+  const { t } = useLanguage();
 
   const renderRoleDashboard = () => {
     switch (role) {
@@ -38,12 +39,17 @@ const Dashboard: React.FC = () => {
           </Link>
 
           <nav className="space-y-6">
-            {['Inshamake', 'Management', 'Reports', 'Settings'].map((item) => (
-              <button key={item} className="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl transition-all group text-gray-500 hover:text-white hover:bg-white/5">
+            {[
+              { id: 'overview', label: t('overview') },
+              { id: 'management', label: t('management') },
+              { id: 'reports', label: t('reports') },
+              { id: 'settings', label: t('settings') }
+            ].map((item) => (
+              <button key={item.id} className="w-full flex items-center space-x-4 px-5 py-4 rounded-2xl transition-all group text-gray-500 hover:text-white hover:bg-white/5">
                 <div className="p-2 rounded-xl bg-white/5 text-gray-400 group-hover:bg-white/10">
                    <Layout size={18} />
                 </div>
-                <span className="font-black text-sm hidden lg:inline">{item}</span>
+                <span className="font-black text-sm hidden lg:inline">{item.label}</span>
               </button>
             ))}
           </nav>
@@ -52,7 +58,7 @@ const Dashboard: React.FC = () => {
         <div className="pt-10 border-t border-white/5 space-y-4">
            <Link to="/login" className="w-full flex items-center space-x-4 px-5 py-4 text-red-500 hover:bg-red-500/10 rounded-2xl transition-all">
               <LogOut size={20} />
-              <span className="font-black text-sm hidden lg:inline">Sign Out</span>
+              <span className="font-black text-sm hidden lg:inline">{t('logout')}</span>
            </Link>
         </div>
       </aside>

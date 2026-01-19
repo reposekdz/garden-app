@@ -2,14 +2,17 @@
 import React from 'react';
 import { 
   GraduationCap, Star, Target, Users, PenTool, Layout, BookOpen, 
-  ChevronRight, Search, Bell, Download, Filter, Plus
+  ChevronRight, Search, Bell, Download, Filter, Plus, Calendar as CalendarIcon,
+  CheckCircle, AlertCircle
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   Cell, RadialBarChart, RadialBar, Legend 
 } from 'recharts';
+import { useLanguage } from '../../components/LanguageContext';
 
 const DOSDashboard: React.FC = () => {
+  const { t } = useLanguage();
   const classPerformance = [
     { name: 'Software', avg: 85 },
     { name: 'Construction', avg: 72 },
@@ -30,7 +33,7 @@ const DOSDashboard: React.FC = () => {
         <div className="space-y-2">
           <div className="flex items-center space-x-4">
             <div className="p-4 bg-white shadow-xl border border-gray-100 rounded-[1.5rem]"><GraduationCap className="text-gray-950" /></div>
-            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">Academic Control</h1>
+            <h1 className="text-4xl lg:text-6xl font-black text-gray-950 tracking-tighter">{t('academics')}</h1>
           </div>
           <p className="text-gray-400 font-medium ml-16">Umuyobozi w'Amasomo n'Inyigisho</p>
         </div>
@@ -77,23 +80,25 @@ const DOSDashboard: React.FC = () => {
            </div>
         </div>
 
-        <div className="bg-gray-950 p-12 rounded-[4rem] text-white space-y-10 relative overflow-hidden group">
-           <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:scale-110 transition-transform"><Target size={200} /></div>
-           <h4 className="text-2xl font-black tracking-tighter relative z-10">Module Progress</h4>
-           <div className="space-y-8 relative z-10">
-              {syllabusData.map((item, i) => (
-                <div key={i} className="space-y-2">
-                   <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-gray-500">
-                      <span>{item.name}</span>
-                      <span>{item.p}%</span>
-                   </div>
-                   <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full" style={{width: `${item.p}%`, backgroundColor: item.fill}}></div>
+        {/* Academic Calendar (NEW) */}
+        <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-sm space-y-10">
+           <h4 className="text-2xl font-black tracking-tighter">Academic Calendar</h4>
+           <div className="space-y-6">
+              {[
+                { event: 'Mid-term Exams', date: 'Oct 12 - 18', type: 'Exam' },
+                { event: 'Workshop Audit', date: 'Oct 25', type: 'Audit' },
+                { event: 'Graduation Prep', date: 'Nov 02', type: 'Meeting' }
+              ].map((item, i) => (
+                <div key={i} className="flex items-start space-x-4 p-4 hover:bg-gray-50 rounded-3xl transition-all">
+                   <div className="p-3 bg-gray-950 text-white rounded-2xl"><CalendarIcon size={20} /></div>
+                   <div>
+                      <p className="font-black text-gray-900">{item.event}</p>
+                      <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{item.date} • {item.type}</p>
                    </div>
                 </div>
               ))}
            </div>
-           <button className="w-full py-5 bg-white text-gray-950 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-green-500 hover:text-white transition-all">Syllabus Audit</button>
+           <button className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:shadow-xl transition-all">Edit Calendar</button>
         </div>
       </div>
     </div>
