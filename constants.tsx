@@ -10,15 +10,15 @@ export const TRADES: Trade[] = [
     description: 'Master full-stack development, mobile apps, and systems engineering.',
     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop',
     levels: [
-      { id: 'sod3', name: 'Level 3 SOD', description: 'Fundamentals of computer systems and basic programming.' },
-      { id: 'sod4', name: 'Level 4 SOD', description: 'Web development, database management, and UI design.' },
-      { id: 'sod5', name: 'Level 5 SOD', description: 'Advanced software engineering, cloud computing, and mobile apps.' }
+      { id: 'sod3', name: 'Urwego rwa 3 SOD', description: 'Ibyibanze kuri mudasobwa no gutangira gukora porogaramu.' },
+      { id: 'sod4', name: 'Urwego rwa 4 SOD', description: 'Gukora imbuga, gucunga amakuru, no gushushanya imiterere ya porogaramu.' },
+      { id: 'sod5', name: 'Urwego rwa 5 SOD', description: 'Inyigisho zihanitse ku gukora porogaramu, Cloud, na porogaramu za telefone.' }
     ],
     tools: [
-      { name: 'VS Code', description: 'Primary IDE for coding and debugging.' },
-      { name: 'Git & GitHub', description: 'Version control and collaboration.' },
-      { name: 'Docker', description: 'Containerization for modern deployment.' },
-      { name: 'SQL Workbench', description: 'Database design and management.' }
+      { name: 'VS Code', description: "Igikoresho cy'ibanze mu kwandika code." },
+      { name: 'Git & GitHub', description: 'Uburyo bwo kubika no guhuza imishinga.' },
+      { name: 'Docker', description: 'Gupakira porogaramu mu buryo bwa kijyambere.' },
+      { name: 'SQL Workbench', description: 'Gushushanya no gucunga amakuru.' }
     ],
     gallery: [
       { url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070', caption: 'Abanyeshuri bafatanya mu mushinga wa porogaramu.' },
@@ -28,7 +28,7 @@ export const TRADES: Trade[] = [
     ],
     coreModules: [
       'Uburyo Porogaramu Zubakwa',
-      'Gukora I mbuga za Web',
+      'Gukora Imbuga za Web',
       'Ikoranabuhanga rya Cloud',
       'Gukora Porogaramu za Telefone',
       'Umutekano w’Ikoranabuhanga'
@@ -48,15 +48,15 @@ export const TRADES: Trade[] = [
     description: 'Expert training in modern architecture, masonry, and sustainable techniques.',
     image: 'https://images.unsplash.com/photo-1503387762-592dee58c160?q=80&w=2070&auto=format&fit=crop',
     levels: [
-      { id: 'bdc3', name: 'Level 3 BDC', description: 'Basic masonry, site preparation, and safety.' },
-      { id: 'bdc4', name: 'Level 4 BDC', description: 'Carpentry, plumbing basics, and blueprint reading.' },
-      { id: 'bdc5', name: 'Level 5 BDC', description: 'Structural engineering, project management, and finishing.' }
+      { id: 'bdc3', name: 'Urwego rwa 3 BDC', description: 'Ibyibanze mu bwubatsi, gutegura ikibanza n’umutekano.' },
+      { id: 'bdc4', name: 'Urwego rwa 4 BDC', description: 'Ububaji, amapombo, no gusoma ibishushanyo mbonera.' },
+      { id: 'bdc5', name: 'Urwego rwa 5 BDC', description: 'Injeniyeri, gucunga imishinga, no gusoza inyubako.' }
     ],
     tools: [
-      { name: 'Laser Level', description: 'Precision measurement for site layout.' },
-      { name: 'Trowels', description: 'Specialized tools for brickwork and plastering.' },
-      { name: 'Concrete Mixer', description: 'Industrial equipment for material preparation.' },
-      { name: 'Theodolite', description: 'Advanced surveying and angle measurement.' }
+      { name: 'Laser Level', description: 'Gupima umurongo neza.' },
+      { name: 'Trowels', description: "Ibikoresho by'ibanze mu gusiga sima." },
+      { name: 'Concrete Mixer', description: 'Imashini ivanga sima.' },
+      { name: 'Theodolite', description: "Gupima imiterere y'ubutaka." }
     ],
     gallery: [
       { url: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070', caption: 'Uburyo bwiza bwo kubaka inkuta.' },
@@ -65,7 +65,7 @@ export const TRADES: Trade[] = [
       { url: 'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=2070', caption: 'Igisenge kijyanye n’ibidukikije.' }
     ],
     coreModules: [
-      'Gusoma I bishushanyo Mbonera',
+      'Gusoma Ibishushanyo Mbonera',
       'Inganda n’Ubwubatsi',
       'Ibikoresho biramba by’ubwubatsi',
       'Uburyo bwo gushyira amazi n’amashanyarazi mu nzu',
@@ -86,17 +86,17 @@ export const TRADES: Trade[] = [
     description: 'Leading edge diagnosis, repair, and innovation in automotive systems.',
     image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2072&auto=format&fit=crop',
     levels: [
-      { id: 'aut3', name: 'Level 3 AUT', description: 'Engine fundamentals and basic maintenance.' },
-      { id: 'aut4a', name: 'Level 4a AUT', description: 'Advanced Transmission systems and chassis mechanics.' },
-      { id: 'aut4b', name: 'Level 4b AUT', description: 'Automotive electrical systems and sensors integration.' },
-      { id: 'aut5a', name: 'Level 5a AUT', description: 'Electronic fuel injection and diagnostic scanning expert.' },
-      { id: 'aut5b', name: 'Level 5b AUT', description: 'Electric vehicles, hybrid systems and green mobility.' }
+      { id: 'aut3', name: 'Urwego rwa 3 AUT', description: 'Ibyibanze kuri moteri no kuyisana.' },
+      { id: 'aut4a', name: 'Urwego rwa 4a AUT', description: "Sisitemu zikomeye zihambaye n'imikorere y'imodoka." },
+      { id: 'aut4b', name: 'Urwego rwa 4b AUT', description: "Amashanyarazi y'imodoka no kuyahuza." },
+      { id: 'aut5a', name: 'Urwego rwa 5a AUT', description: 'Gusuzuma imodoka hifashishijwe ikoranabuhanga.' },
+      { id: 'aut5b', name: 'Urwego rwa 5b AUT', description: 'Imodoka zikoresha amashanyarazi.' }
     ],
     tools: [
-      { name: 'OBD-II Scanner', description: 'Electronic diagnosis of vehicle subsystems.' },
-      { name: 'Pneumatic Wrench', description: 'High-torque tools for heavy assembly.' },
-      { name: 'Hydraulic Lift', description: 'Professional vehicle elevation for under-body work.' },
-      { name: 'Engine Stand', description: 'Mobile mount for engine disassembly and repair.' }
+      { name: 'OBD-II Scanner', description: "Gusuzuma ibibazo by'imodoka hakoreshejwe mudasobwa." },
+      { name: 'Pneumatic Wrench', description: "Igikoresho gifungura n'ingufu z'umwuka." },
+      { name: 'Hydraulic Lift', description: 'Uburyo bwo kuzamura imodoka hejuru.' },
+      { name: 'Engine Stand', description: 'Aho moteri itererwa kugira ngo isanwe.' }
     ],
     gallery: [
       { url: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070', caption: 'Gusuzuma no gusana moteri.' },
@@ -122,56 +122,9 @@ export const TRADES: Trade[] = [
 ];
 
 export const TRANSLATIONS: Record<Language, any> = {
-  en: {
-    welcome: "Empowering Your Future at Garden TVET",
-    tagline: "Skills for a Better Tomorrow",
-    home: "Home",
-    sports: "Sports",
-    services: "Services",
-    trades: "Trades",
-    contact: "Contact Us",
-    support: "Support",
-    login: "Login",
-    register: "Register",
-    searchPlaceholder: "Search everything...",
-    sod: "Software Development",
-    bdc: "Building Construction",
-    auto: "Automobile Tech",
-    testimonialsTitle: "What Parents & Students Say",
-    testimonialsTag: "Community Voices",
-    campusLifeTitle: "Campus Experience",
-    campusLifeTag: "Beyond Academics",
-    loginTitle: "Welcome Back",
-    loginSubtitle: "Login to your account to continue",
-    registerTitle: "Join Our Community",
-    registerSubtitle: "Start your journey today",
-    roleSelectionTitle: "Select Your Profile"
-  },
-  fr: {
-    welcome: "Valoriser votre avenir à Garden TVET",
-    tagline: "Compétences pour un avenir meilleur",
-    home: "Accueil",
-    sports: "Sports",
-    services: "Services",
-    trades: "Métiers",
-    contact: "Contactez-nous",
-    support: "Support",
-    login: "Connexion",
-    register: "S'inscrire",
-    searchPlaceholder: "Rechercher tout...",
-    sod: "Développement Logiciel",
-    bdc: "Construction de Bâtiments",
-    auto: "Technologie Automobile",
-    testimonialsTitle: "Ce que disent les parents et les élèves",
-    testimonialsTag: "Voix de la communauté",
-    campusLifeTitle: "Vie sur le campus",
-    campusLifeTag: "Au-delà de l'académique",
-    loginTitle: "Bon retour",
-    loginSubtitle: "Connectez-vous pour continuer",
-    registerTitle: "Rejoignez notre communauté",
-    registerSubtitle: "Commencez votre voyage aujourd'hui",
-    roleSelectionTitle: "Sélectionnez votre profil"
-  },
+  en: {},
+  fr: {},
+  sw: {},
   rw: {
     welcome: "Wubake Ejo Hazaza muri Garden TVET",
     tagline: "Ubumenyingiro ku Ejo Hazaza Heza",
@@ -183,7 +136,7 @@ export const TRANSLATIONS: Record<Language, any> = {
     support: "Ubufasha",
     login: "Injira",
     register: "Kwiyandikisha",
-    searchPlaceholder: "Shakisha...",
+    searchPlaceholder: "Shakisha byose...",
     sod: "Gukora Porogaramu",
     bdc: "Ubwubatsi",
     auto: "Ikinyabiziga",
@@ -196,30 +149,5 @@ export const TRANSLATIONS: Record<Language, any> = {
     registerTitle: "Injira mu muryango",
     registerSubtitle: "Tangira urugendo rwawe uyu munsi",
     roleSelectionTitle: "Hitamo Umwirondoro Wawe"
-  },
-  sw: {
-    welcome: "Kukuza Baadaye Yako hapa Garden TVET",
-    tagline: "Ujuzi kwa Kesho Bora",
-    home: "Nyumbani",
-    sports: "Michezo",
-    services: "Huduma",
-    trades: "Biashara",
-    contact: "Wasiliana Nasi",
-    support: "Msaada",
-    login: "Ingia",
-    register: "Jisajili",
-    searchPlaceholder: "Tafuta...",
-    sod: "Maendeleo ya Programu",
-    bdc: "Ujenzi wa Majengo",
-    auto: "Teknolojia ya Magari",
-    testimonialsTitle: "Nini Wazazi na Wanafunzi Wanasema",
-    testimonialsTag: "Sauti za Jamii",
-    campusLifeTitle: "Uzoefu wa Kampasi",
-    campusLifeTag: "Zaidi ya Masomo",
-    loginTitle: "Karibu Tena",
-    loginSubtitle: "Ingia ili uendelee",
-    registerTitle: "Jiunge na Jamii yetu",
-    registerSubtitle: "Anza safari yako leo",
-    roleSelectionTitle: "Chagua Wasifu Wako"
   }
 };

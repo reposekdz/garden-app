@@ -1,223 +1,299 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Search, Menu, X, Globe, LogIn, Bell, Command, Sun, Moon, Sparkles, 
   Activity, ChevronRight, ChevronDown, Trophy, Users, Calendar, 
-  BookOpen, Heart, Briefcase, HelpCircle, FileText, Cpu, Hammer, Car
+  BookOpen, Heart, Briefcase, HelpCircle, FileText, Cpu, Hammer, Car,
+  Zap, ShieldCheck, MessageSquare, Star, ArrowUpRight, Search as SearchIcon
 } from 'lucide-react';
 import { useLanguage } from './LanguageContext';
 
 const Header: React.FC = () => {
-  const { t, language, setLanguage } = useLanguage();
+  const { t } = useLanguage();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setActiveDropdown(null);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(true);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
-  const menuFeatures = {
-    'Sports': [
-      { label: 'Football Team', icon: Trophy, desc: 'Current champions of the regional TVET gala.' },
-      { label: 'Basketball', icon: Users, desc: 'Mixed teams training every Tuesday.' },
-      { label: 'Facilities', icon: Activity, desc: 'Modern arena and fitness center.' },
-    ],
-    'Services': [
-      { label: 'Career Hub', icon: Briefcase, desc: 'Internship and job placement support.' },
-      { label: 'Health Center', icon: Heart, desc: '24/7 medical assistance for students.' },
-      { label: 'Library', icon: BookOpen, desc: 'Digital and physical learning resources.' },
-    ],
-    'Trades': [
-      { label: 'Software Dev', icon: Cpu, path: '/trades/sod' },
-      { label: 'Construction', icon: Hammer, path: '/trades/bdc' },
-      { label: 'Automobile', icon: Car, path: '/trades/auto' },
-    ],
-    'Support': [
-      { label: 'Help Desk', icon: HelpCircle, desc: 'Technical and academic assistance.' },
-      { label: 'FAQ', icon: FileText, desc: 'Quick answers to common questions.' },
-      { label: 'Feedback', icon: Sparkles, desc: 'Help us improve your experience.' },
-    ]
+  const handleMouseEnter = (key: string) => {
+    if (timeoutRef.current) window.clearTimeout(timeoutRef.current);
+    setActiveDropdown(key);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = window.setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
+  const menuData: Record<string, any> = {
+    'Imikino': {
+      title: 'Imikino n\'Imyidagaduro',
+      sections: [
+        {
+          label: 'Amakipe y\'Ishuri',
+          items: [
+            { label: 'Ikipe y\'Umupira', icon: Trophy, desc: 'Abatwaye igikombe cya TVET 2024.', badge: 'Gishya' },
+            { label: 'Basketball', icon: Users, desc: 'Imyitozo buri wa kabiri n\'uwa kane.' },
+          ]
+        },
+        {
+          label: 'Ibirori By\'Ishuri',
+          items: [
+            { label: 'Gahunda y\'Imikino', icon: Calendar, desc: 'Reba imikino itaha y\'ishuri.' },
+            { label: 'Umuganura 2024', icon: Sparkles, desc: 'Ibirori by\'umuco n\'umubano.' },
+          ]
+        }
+      ],
+      featured: { title: 'Umukino utaha', desc: 'Garden vs Kigali TVET - Sat 14:00', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=400' }
+    },
+    'Serivisi': {
+      title: 'Serivisi z\'Abanyeshuri',
+      sections: [
+        {
+          label: 'Gufasha Kwiga',
+          items: [
+            { label: 'Isomero rya Kijyambere', icon: BookOpen, desc: 'Ibitabo na mudasobwa bihagije.' },
+            { label: 'Laboratwari', icon: Cpu, desc: 'Aho gukora imyitozo ngiro.' },
+          ]
+        },
+        {
+          label: 'Iterambere',
+          items: [
+            { label: 'Ubujyanama', icon: MessageSquare, desc: 'Guhitamo umwuga neza.' },
+            { label: 'Ikigo cy\'Ubuzima', icon: Heart, desc: 'First Aid & Health services.' },
+          ]
+        }
+      ],
+      featured: { title: 'New Services', desc: 'Sura Isomero rishya ryuzuye ikoranabuhanga.', img: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=400' }
+    },
+    'Imyuga': {
+      title: 'Amashami Yacu',
+      sections: [
+        {
+          label: 'Ikoranabuhanga',
+          items: [
+            { label: 'SOD - Software Dev', icon: Cpu, desc: 'Code your future today.', path: '/trades/sod' },
+            { label: 'AUT - Automobile', icon: Car, desc: 'Advanced engine mastery.', path: '/trades/auto' },
+          ]
+        },
+        {
+          label: 'Ubwubatsi',
+          items: [
+            { label: 'BDC - Construction', icon: Hammer, desc: 'Modern civil engineering.', path: '/trades/bdc' },
+          ]
+        }
+      ],
+      featured: { title: 'Join a Trade', desc: 'Ubumenyi ngiro nibwo bukire nyabwo.', img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400' }
+    },
+    'Ubufasha': {
+      title: 'Support Center',
+      sections: [
+        {
+          label: 'Contact',
+          items: [
+            { label: 'WhatsApp Chat', icon: MessageSquare, desc: 'Quick replies 24/7.' },
+            { label: 'Email Us', icon: Globe, desc: 'Support@gardentvet.rw' },
+          ]
+        }
+      ],
+      featured: { title: 'Help is here', desc: 'Turi hano kugira ngo tuguhe ubufasha bwose.', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400' }
+    }
   };
 
   const navItems = [
-    { label: t('home'), path: '/', dropdown: false },
-    { label: t('sports'), path: '/sports', dropdown: true, key: 'Sports' },
-    { label: t('services'), path: '/services', dropdown: true, key: 'Services' },
-    { label: t('trades'), path: '/trades/sod', dropdown: true, key: 'Trades' },
-    { label: t('contact'), path: '/contact', dropdown: false },
-    { label: t('support'), path: '/support', dropdown: true, key: 'Support' },
-  ];
-
-  const isActive = (path: string) => location.pathname === path;
-
-  const notifications = [
-    { id: 1, text: "Admission for 2026 intake is now open!", type: "news" },
-    { id: 2, text: "New Software Lab commissioned.", type: "update" },
-    { id: 3, text: "Sports Day scheduled for next Friday.", type: "event" }
+    { label: 'Ahabanza', path: '/', dropdown: false },
+    { label: 'Imikino', path: '/sports', dropdown: true },
+    { label: 'Serivisi', path: '/services', dropdown: true },
+    { label: 'Imyuga', path: '/trades/sod', dropdown: true },
+    { label: 'Ubufasha', path: '/support', dropdown: true },
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled 
-        ? 'py-4 bg-white/60 backdrop-blur-2xl shadow-2xl border-b border-white/20' 
-        : 'py-8 bg-transparent'
-    }`}>
-      <div className="w-full px-4 sm:px-8 lg:px-12">
-        <div className="flex justify-between items-center">
-          {/* Logo Area with Fixed Glassmorphism */}
-          <Link to="/" className="group relative flex items-center space-x-4 flex-shrink-0 z-20">
-            <div className={`absolute inset-[-12px] rounded-[2.5rem] border border-white/20 shadow-xl transition-all duration-500 backdrop-blur-xl ${
-              scrolled ? 'bg-white/30 opacity-100' : 'bg-white/10 opacity-100 shadow-white/5'
-            }`}></div>
-            
-            <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-400 to-blue-600 rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center text-white font-black text-2xl sm:text-3xl shadow-2xl transform group-hover:rotate-12 transition-all duration-500">G</div>
-            <div className="relative flex flex-col">
-              <span className={`text-xl sm:text-2xl font-black tracking-tighter leading-none transition-colors duration-500 ${scrolled ? 'text-gray-900' : 'text-white sm:text-gray-900'}`}>Garden <span className="gradient-text">TVET</span></span>
-              <div className="flex items-center space-x-1 mt-1.5">
-                 <Activity size={10} className="text-green-500 animate-pulse" />
-                 <span className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-500 ${scrolled ? 'text-gray-400' : 'text-gray-300 sm:text-gray-400'}`}>Excellence Hub</span>
+    <>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+        scrolled ? 'glass-nav py-3' : 'bg-transparent py-10'
+      }`}>
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
+          <div className="flex justify-between items-center">
+            {/* Logo Section */}
+            <Link to="/" className="flex items-center space-x-4 group z-[60]">
+              <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gray-900 rounded-[1.5rem] flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-2xl group-hover:bg-green-500 transition-all duration-500">G</div>
+              <div className="flex flex-col">
+                <span className={`text-xl sm:text-2xl font-black tracking-tighter leading-none ${scrolled ? 'text-gray-950' : 'text-white'}`}>Garden TVET</span>
+                <span className={`text-[10px] font-black uppercase tracking-[0.2em] mt-1 ${scrolled ? 'text-gray-500' : 'text-white/70'}`}>Uburezi Bufite Intego</span>
               </div>
-            </div>
-          </Link>
+            </Link>
 
-          {/* Enhanced Desktop Nav */}
-          <nav className="hidden xl:flex items-center space-x-1 bg-gray-900/5 backdrop-blur-xl p-1.5 rounded-[2rem] border border-white/40 shadow-inner mx-8">
-            {navItems.map((item) => (
-              <div key={item.path} className="relative">
-                <button
-                  onMouseEnter={() => item.dropdown && setActiveDropdown(item.key || null)}
-                  onClick={() => item.dropdown ? setActiveDropdown(activeDropdown === item.key ? null : (item.key || null)) : null}
-                  className={`px-5 py-3 rounded-[1.5rem] text-sm font-black transition-all whitespace-nowrap flex items-center space-x-2 group/item ${
-                    isActive(item.path) || activeDropdown === item.key
-                      ? 'bg-white text-gray-900 shadow-xl'
-                      : 'text-gray-500 hover:text-gray-900'
-                  }`}
+            {/* Glassmorphic Nav */}
+            <nav className={`hidden xl:flex items-center space-x-1 p-2 rounded-[2.5rem] border transition-all duration-700 ${
+              scrolled ? 'bg-gray-100/30 border-gray-200' : 'bg-white/10 border-white/20 backdrop-blur-3xl shadow-2xl'
+            }`}>
+              {navItems.map((item) => (
+                <div 
+                  key={item.label} 
+                  className="relative"
+                  onMouseEnter={() => item.dropdown && handleMouseEnter(item.label)}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  <Link to={item.path}>{item.label}</Link>
-                  {item.dropdown && <ChevronDown size={14} className={`transition-transform duration-300 ${activeDropdown === item.key ? 'rotate-180' : ''}`} />}
-                  {isActive(item.path) && !item.dropdown && <Sparkles size={12} className="absolute -top-1 -right-1 text-green-400 animate-bounce" />}
-                </button>
-
-                {/* Dropdown Content */}
-                {item.dropdown && activeDropdown === item.key && (
-                  <div 
-                    onMouseLeave={() => setActiveDropdown(null)}
-                    className="absolute top-[120%] left-0 w-80 bg-white rounded-[2rem] shadow-2xl border border-gray-100 p-6 animate-in fade-in slide-in-from-top-4 z-50"
+                  <Link
+                    to={item.path}
+                    className={`px-6 py-3 rounded-[1.5rem] text-xs font-black transition-all flex items-center space-x-2 ${
+                      scrolled 
+                        ? (location.pathname === item.path || activeDropdown === item.label ? 'bg-white text-gray-950 shadow-xl border border-gray-100' : 'text-gray-600 hover:text-gray-950 hover:bg-white/60')
+                        : (location.pathname === item.path || activeDropdown === item.label ? 'bg-white/30 text-white' : 'text-white hover:bg-white/10')
+                    }`}
                   >
-                    <div className="space-y-4">
-                      {menuFeatures[item.key as keyof typeof menuFeatures].map((feat: any, i: number) => (
-                        <Link 
-                          key={i} 
-                          to={feat.path || item.path} 
-                          className="flex items-start space-x-4 p-3 rounded-2xl hover:bg-gray-50 transition-all group"
-                        >
-                          <div className="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-all">
-                            <feat.icon size={20} />
-                          </div>
-                          <div>
-                            <p className="text-sm font-black text-gray-900">{feat.label}</p>
-                            {feat.desc && <p className="text-[10px] font-medium text-gray-500 leading-tight mt-0.5">{feat.desc}</p>}
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
+                    <span>{item.label}</span>
+                    {item.dropdown && <ChevronDown size={14} className={`transition-transform duration-500 ${activeDropdown === item.label ? 'rotate-180' : ''}`} />}
+                  </Link>
 
-          <div className="hidden lg:flex items-center space-x-6 flex-shrink-0">
-            <button className="flex items-center space-x-4 px-5 py-3 bg-white/50 border border-gray-100 rounded-[1.5rem] text-gray-400 transition-all hover:bg-white hover:shadow-xl group">
-              <Search size={20} className="group-hover:text-green-500 transition-colors" />
-              <div className="flex items-center space-x-2 px-2 py-1 bg-gray-100 rounded-lg text-[10px] font-black text-gray-400 border border-gray-200">
-                <Command size={10} />
-                <span>K</span>
-              </div>
-            </button>
-
-            <div className="relative">
-              <button onClick={() => setShowNotifications(!showNotifications)} className="p-4 bg-white/50 border border-gray-100 rounded-[1.5rem] shadow-sm text-gray-400 hover:text-green-500 transition-all relative hover:shadow-xl">
-                <Bell size={22} />
-                <div className="absolute top-3.5 right-3.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white animate-ping"></div>
-              </button>
-              {showNotifications && (
-                <div className="absolute right-0 mt-6 w-80 bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 p-6 animate-in fade-in slide-in-from-top-6 z-50">
-                  <h4 className="font-black text-xl mb-6">Inbox</h4>
-                  <div className="space-y-3">
-                    {notifications.map(n => (
-                      <div key={n.id} className="p-4 hover:bg-gray-50 rounded-2xl cursor-pointer transition-all border-l-4 border-transparent hover:border-green-400 group">
-                        <p className="text-sm font-bold text-gray-800 leading-tight group-hover:text-gray-950">{n.text}</p>
-                        <span className="text-[10px] text-gray-400 uppercase font-black tracking-widest mt-2 inline-block">{n.type}</span>
+                  {/* Enhanced Mega Menu */}
+                  {item.dropdown && activeDropdown === item.label && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 animate-in fade-in zoom-in-95 duration-300">
+                      <div className="w-[850px] bg-white rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-gray-100 p-10 flex overflow-hidden">
+                        <div className="flex-1 space-y-10">
+                          <div className="flex justify-between items-center border-b border-gray-50 pb-6">
+                            <h3 className="text-2xl font-black text-gray-950 tracking-tighter">{menuData[item.label].title}</h3>
+                            <Link to={item.path} className="text-green-600 font-bold text-sm flex items-center space-x-2 hover:underline">
+                              <span>Reba Byose</span>
+                              <ArrowUpRight size={16} />
+                            </Link>
+                          </div>
+                          <div className="grid grid-cols-2 gap-10">
+                            {menuData[item.label].sections.map((sec: any, i: number) => (
+                              <div key={i} className="space-y-6">
+                                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{sec.label}</p>
+                                <div className="space-y-4">
+                                  {sec.items.map((sub: any, j: number) => (
+                                    <Link key={j} to={sub.path || item.path} className="flex items-start space-x-5 p-4 rounded-[1.5rem] hover:bg-gray-50 transition-all group">
+                                      <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-400 group-hover:bg-green-500 group-hover:text-white transition-all shadow-sm">
+                                        <sub.icon size={22} />
+                                      </div>
+                                      <div>
+                                        <p className="text-sm font-black text-gray-950 leading-none">{sub.label}</p>
+                                        <p className="text-[11px] text-gray-500 mt-2 line-clamp-2 leading-relaxed font-medium">{sub.desc}</p>
+                                      </div>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="w-72 ml-10 pl-10 border-l border-gray-50 flex flex-col">
+                           <div className="flex-1 rounded-[2.5rem] overflow-hidden relative group/feat shadow-2xl">
+                              <img src={menuData[item.label].featured.img} className="w-full h-full object-cover group-hover/feat:scale-110 transition-transform duration-1000" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-950/20 to-transparent p-6 flex flex-col justify-end">
+                                 <h4 className="text-white font-black text-lg leading-tight tracking-tight">{menuData[item.label].featured.title}</h4>
+                                 <p className="text-white/70 text-xs mt-2 font-medium leading-relaxed">{menuData[item.label].featured.desc}</p>
+                              </div>
+                           </div>
+                           <button className="mt-8 py-5 bg-gray-950 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-green-500 transition-all shadow-xl">Contact Staff</button>
+                        </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              ))}
+            </nav>
 
-            <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
-              <Link to="/login" className={`px-6 py-3.5 text-sm font-black transition-colors ${scrolled ? 'text-gray-700 hover:text-gray-900' : 'text-white sm:text-gray-700'}`}>Login</Link>
-              <Link to="/register" className="px-8 py-4 bg-gray-900 text-white text-sm font-black rounded-[1.5rem] shadow-2xl hover:shadow-green-500/20 hover:-translate-y-1 transition-all whitespace-nowrap">Get Started</Link>
-            </div>
-          </div>
+            {/* Right Side Actions */}
+            <div className="flex items-center space-x-4 sm:space-x-8 z-[60]">
+              <button 
+                onClick={() => setIsSearchOpen(true)}
+                className={`hidden md:flex items-center space-x-4 px-6 py-3.5 rounded-2xl border transition-all ${
+                  scrolled ? 'bg-gray-100 border-gray-200 text-gray-500' : 'bg-white/10 border-white/20 text-white/60 backdrop-blur-xl'
+                } hover:bg-white/20 shadow-xl`}
+              >
+                <SearchIcon size={18} />
+                <span className="text-[11px] font-black uppercase tracking-[0.2em]">Shakisha...</span>
+                <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${scrolled ? 'bg-gray-200 text-gray-500' : 'bg-white/10 text-white/40'}`}>⌘K</span>
+              </button>
 
-          <div className="flex lg:hidden items-center space-x-3">
-             <button className="p-3 bg-white border border-gray-100 rounded-2xl text-gray-600 shadow-xl" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-               {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-             </button>
+              <div className="flex items-center space-x-3">
+                <Link to="/login" className={`px-6 py-3 text-xs font-black transition-all ${scrolled ? 'text-gray-950' : 'text-white'}`}>Injira</Link>
+                <Link to="/register" className={`px-8 py-4 rounded-[1.5rem] text-xs font-black shadow-2xl hover:-translate-y-1 transition-all flex items-center space-x-2 ${
+                  scrolled ? 'bg-gray-950 text-white' : 'bg-white text-gray-950'
+                }`}>
+                  <span>Kwiyandikisha</span>
+                  <ChevronRight size={16} />
+                </Link>
+              </div>
+
+              <button className={`xl:hidden p-3 rounded-2xl border ${scrolled ? 'border-gray-200 text-gray-950' : 'border-white/20 text-white'}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      {isMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-3xl border-t border-gray-100 p-6 animate-in slide-in-from-top-8 duration-500 shadow-2xl rounded-b-[3rem] z-50">
-          <div className="space-y-2 mb-8">
-            {navItems.map((item) => (
-              <div key={item.path} className="space-y-2">
-                <Link
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center justify-between px-6 py-4 rounded-2xl text-xl font-black transition-all ${
-                    isActive(item.path) ? 'bg-green-500 text-white shadow-2xl' : 'bg-gray-50 text-gray-600'
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <ChevronRight size={18} />
-                </Link>
-                {item.dropdown && (
-                  <div className="grid grid-cols-2 gap-2 px-2">
-                    {menuFeatures[item.key as keyof typeof menuFeatures].map((feat: any, i: number) => (
-                      <Link key={i} to={feat.path || item.path} className="p-3 bg-white border border-gray-100 rounded-xl text-[10px] font-black uppercase text-gray-500 flex items-center space-x-2">
-                         <feat.icon size={14} />
-                         <span>{feat.label}</span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
+      {/* Global Advanced Interactive Search Overlay */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 z-[200] bg-gray-950/95 backdrop-blur-[40px] p-6 lg:p-20 flex items-start justify-center animate-in fade-in duration-500">
+           <button onClick={() => setIsSearchOpen(false)} className="absolute top-10 right-10 text-white/40 hover:text-white transition-colors"><X size={40} /></button>
+           <div className="w-full max-w-5xl mt-20 space-y-16 animate-in slide-in-from-bottom-12 duration-700">
+              <div className="space-y-4 text-center">
+                 <h2 className="text-4xl lg:text-7xl font-black text-white tracking-tighter">Icyo waba <span className="text-green-500">ushaka cyose.</span></h2>
+                 <p className="text-gray-500 font-medium text-xl">Shakisha amashami, abanyeshuri, abarimu cyangwa andi makuru.</p>
               </div>
-            ))}
-          </div>
+              
+              <div className="relative group">
+                <SearchIcon className="absolute left-10 top-12 text-green-500 group-focus-within:scale-110 transition-transform" size={40} />
+                <input 
+                  autoFocus 
+                  type="text" 
+                  placeholder="Andika hano..."
+                  className="w-full bg-white/5 border-2 border-white/10 rounded-[4rem] px-28 py-12 text-4xl font-black text-white outline-none focus:border-green-500 transition-all placeholder:text-white/10 shadow-[0_0_100px_rgba(34,197,94,0.1)]"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 {[
+                   { label: 'Ubwubatsi Level 5', cat: 'Amashami', icon: Hammer, desc: 'Reba syllabus n\'amasomo.' },
+                   { label: 'Gahunda y\'Ishuri', cat: 'Amasomo', icon: Calendar, desc: 'Imfashanyigisho n\'amasaha.' },
+                   { label: 'John Bosco', cat: 'Umunyeshuri', icon: Users, desc: 'SOD Year 3 - Software Dev.' }
+                 ].map((res, i) => (
+                   <button key={i} className="flex flex-col items-start p-10 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 rounded-[3rem] text-left transition-all group relative overflow-hidden">
+                      <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                         <res.icon size={100} />
+                      </div>
+                      <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-white/40 group-hover:text-green-500 transition-colors mb-8 shadow-xl">
+                        <res.icon size={28} />
+                      </div>
+                      <div>
+                         <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">{res.cat}</p>
+                         <p className="text-2xl font-black text-white tracking-tight leading-tight">{res.label}</p>
+                         <p className="text-gray-500 text-sm mt-3 font-medium">{res.desc}</p>
+                      </div>
+                   </button>
+                 ))}
+              </div>
+           </div>
         </div>
       )}
-    </header>
+    </>
   );
 };
 
