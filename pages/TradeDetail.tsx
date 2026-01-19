@@ -5,19 +5,30 @@ import {
   ChevronLeft, Hammer, ImageIcon, Briefcase, 
   CheckCircle2, ChevronRight, GraduationCap, Target, Award, Play,
   TrendingUp, BookOpen, Star, Download, LayoutGrid, HelpCircle,
-  Activity, Wrench
+  Activity, Wrench, Rocket, ShieldCheck, Globe, Cpu, Zap, Lightbulb,
+  ExternalLink, Layers, Terminal, Construction, CarFront, Users, MessageCircle,
+  // Added missing ArrowUpRight icon
+  ArrowUpRight
 } from 'lucide-react';
 import { 
-  Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer 
+  Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer,
+  AreaChart, Area, XAxis, Tooltip
 } from 'recharts';
 import { TRADES } from '../constants';
 
 const TradeDetail: React.FC = () => {
   const { id } = useParams();
   const trade = TRADES.find((t) => t.id === id);
-  const [activeTab, setActiveTab] = useState<'inzira' | 'ibikoresho' | 'amafoto' | 'deepdive' | 'quiz'>('inzira');
+  const [activeTab, setActiveTab] = useState<'inzira' | 'deepdive' | 'imishinga' | 'amafoto' | 'quiz'>('inzira');
   const [selectedLevel, setSelectedLevel] = useState<string | null>(trade?.levels[0].id || null);
   const [quizFinished, setQuizFinished] = useState(false);
+
+  // Mock Project Data
+  const projects = [
+    { id: 1, title: 'Smart City Prototype', category: 'Innovation', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400', lead: 'Final Year Team A' },
+    { id: 2, title: 'Eco-Friendly Structure', category: 'Sustainability', image: 'https://images.unsplash.com/photo-1449156059431-787058726548?q=80&w=400', lead: 'BDC Level 5' },
+    { id: 3, title: 'Hybrid Engine Optimization', category: 'Mechanics', image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=400', lead: 'AUT Level 4' },
+  ];
 
   const skillData = [
     { subject: 'Ngiro', A: id === 'sod' ? 95 : 90 },
@@ -36,35 +47,46 @@ const TradeDetail: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white pb-20 w-full font-['Plus_Jakarta_Sans'] overflow-x-hidden">
-      {/* Dynamic Hero Section */}
-      <div className="relative h-[65svh] lg:h-[85svh] w-full overflow-hidden bg-gray-50">
-        <img src={trade.image} className="w-full h-full object-cover brightness-[0.7] lg:brightness-[0.9]" alt={trade.name} />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-transparent lg:via-white/20 flex items-end p-6 lg:p-20">
-          <div className="container-fluid !px-0">
-            <Link to="/" className="inline-flex items-center space-x-2 sm:space-x-3 text-gray-900 mb-6 lg:mb-12 transition-all hover:-translate-x-2 group">
-              <div className="p-2 lg:p-3 bg-white/90 backdrop-blur-3xl rounded-full border border-gray-100 shadow-xl group-hover:bg-green-600 group-hover:text-white transition-all">
-                <ChevronLeft size={20} />
-              </div>
-              <span className="font-black text-sm lg:text-lg drop-shadow-sm">Ahabanza</span>
+      {/* Power Hero Section */}
+      <div className="relative h-[70svh] lg:h-[90svh] w-full overflow-hidden">
+        <img src={trade.image} className="w-full h-full object-cover brightness-[0.5] lg:brightness-[0.8] scale-105" alt={trade.name} />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-black/30 lg:bg-gradient-to-r lg:from-white/95 lg:via-white/40 lg:to-transparent flex items-end lg:items-center p-6 lg:p-24">
+          <div className="container-fluid !px-0 relative z-10">
+            <Link to="/" className="inline-flex items-center space-x-3 text-gray-900 lg:text-gray-950 mb-10 group bg-white/20 backdrop-blur-3xl px-6 py-3 rounded-full border border-white/20 hover:bg-green-600 hover:text-white transition-all">
+              <ChevronLeft size={20} />
+              <span className="font-black text-xs uppercase tracking-widest">Ahabanza</span>
             </Link>
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-10">
-              <div className="space-y-3 lg:space-y-6 flex-1">
-                <div className="flex flex-wrap items-center gap-2 lg:gap-4 animate-in fade-in slide-in-from-left-8 duration-700">
-                    <span className="px-3 py-1 lg:px-5 lg:py-2 bg-green-600 text-white text-[8px] lg:text-[10px] font-black uppercase rounded-full tracking-widest shadow-2xl">{trade.code}</span>
-                    <span className="px-3 py-1 lg:px-5 lg:py-2 bg-white/90 backdrop-blur-md border border-gray-100 text-gray-950 text-[8px] lg:text-[10px] font-black uppercase rounded-full shadow-lg">Level 3-5 RTB</span>
+            
+            <div className="space-y-6 lg:space-y-10 max-w-5xl">
+              <div className="flex flex-wrap items-center gap-3 animate-in fade-in slide-in-from-left-8 duration-700">
+                <div className="px-5 py-2 bg-green-600 text-white text-[10px] font-black uppercase rounded-full tracking-widest shadow-2xl flex items-center space-x-2">
+                  <ShieldCheck size={14} />
+                  <span>Accredited By RTB</span>
                 </div>
-                <h1 className="text-4xl sm:text-6xl lg:text-8xl xl:text-[9.5rem] font-black text-gray-900 leading-[1.1] lg:leading-[0.85] tracking-tighter drop-shadow-md animate-in fade-in slide-in-from-bottom-12 duration-1000">
-                   {trade.name}
-                </h1>
-                <p className="text-gray-600 max-w-3xl text-sm sm:text-lg lg:text-2xl font-bold leading-relaxed line-clamp-3 lg:line-clamp-none">
+                <div className="px-5 py-2 bg-gray-950 text-white text-[10px] font-black uppercase rounded-full tracking-widest shadow-lg flex items-center space-x-2">
+                  <Globe size={14} />
+                  <span>International Standard</span>
+                </div>
+              </div>
+
+              <h1 className="text-5xl sm:text-7xl lg:text-[10rem] xl:text-[12rem] font-black text-white lg:text-gray-950 leading-[0.95] lg:leading-[0.8] tracking-tighter drop-shadow-2xl lg:drop-shadow-none animate-in fade-in slide-in-from-bottom-12 duration-1000">
+                 {trade.name}
+              </h1>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+                <p className="text-white lg:text-gray-600 text-base sm:text-xl lg:text-3xl font-bold leading-relaxed opacity-90">
                    {trade.description}
                 </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 mb-4">
-                  <button className="w-full sm:w-auto px-10 py-5 lg:px-14 lg:py-8 bg-green-600 text-white rounded-2xl lg:rounded-[3rem] font-black text-sm lg:text-2xl hover:bg-green-700 transition-all flex items-center justify-center space-x-3 lg:space-x-6 shadow-2xl shadow-green-600/30">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button className="flex-1 px-10 py-6 bg-green-600 text-white rounded-3xl font-black text-lg hover:bg-green-700 hover:-translate-y-1 transition-all flex items-center justify-center space-x-4 shadow-2xl shadow-green-600/30">
                     <span>Kwiyandikisha</span>
                     <Play size={20} fill="currentColor" />
                   </button>
+                  <button className="flex-1 px-10 py-6 bg-white border-2 border-gray-100 text-gray-950 rounded-3xl font-black text-lg hover:bg-gray-50 transition-all flex items-center justify-center space-x-4 shadow-xl">
+                    <span>Syllabus</span>
+                    <Download size={20} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -73,99 +95,147 @@ const TradeDetail: React.FC = () => {
 
       <div className="container-fluid mt-12 lg:mt-32 space-y-20 lg:space-y-40">
         
-        {/* Navigation Tabs - Scrollable */}
-        <div className="bg-gray-100/50 p-2 sm:p-4 rounded-3xl lg:rounded-[5rem] overflow-x-auto hide-scrollbar flex gap-2 lg:gap-4 shadow-inner border border-gray-100">
+        {/* Advanced Navigation Bar */}
+        <div className="sticky top-24 z-50 bg-white/80 backdrop-blur-2xl p-3 rounded-3xl lg:rounded-[5rem] overflow-x-auto hide-scrollbar flex gap-2 lg:gap-4 shadow-2xl border border-gray-100">
           {[
             { id: 'inzira', label: 'Incamake', icon: Target },
-            { id: 'deepdive', label: 'Urwego', icon: LayoutGrid },
-            { id: 'ibikoresho', label: 'Workshop', icon: Hammer },
+            { id: 'deepdive', label: 'Urwego', icon: Layers },
+            { id: 'imishinga', label: 'Imishinga', icon: Rocket },
             { id: 'amafoto', label: 'Gallery', icon: ImageIcon },
             { id: 'quiz', label: 'Quiz', icon: HelpCircle },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex-shrink-0 min-w-[120px] lg:flex-1 flex items-center justify-center space-x-2 lg:space-x-4 py-4 lg:py-8 px-4 lg:px-6 rounded-2xl lg:rounded-[4rem] font-black text-[10px] lg:text-xl transition-all ${
-                activeTab === tab.id ? 'bg-white text-gray-900 shadow-xl border border-white' : 'text-gray-400 hover:text-gray-900'
+              className={`flex-shrink-0 min-w-[140px] lg:flex-1 flex items-center justify-center space-x-3 lg:space-x-5 py-5 lg:py-8 px-6 rounded-2xl lg:rounded-[4rem] font-black text-[11px] lg:text-xl transition-all ${
+                activeTab === tab.id 
+                ? 'bg-gray-950 text-white shadow-2xl scale-[1.02]' 
+                : 'text-gray-400 hover:text-gray-950 hover:bg-gray-50'
               }`}
             >
-              <tab.icon size={18} className={activeTab === tab.id ? 'text-green-600' : 'text-gray-300'} />
+              <tab.icon size={22} />
               <span>{tab.label}</span>
             </button>
           ))}
         </div>
 
-        {/* Tab Content: Incamake */}
+        {/* Content Section: Incamake & Skill Analysis */}
         {activeTab === 'inzira' && (
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 space-y-20 lg:space-y-32">
-            <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-              <div className="space-y-8 lg:space-y-12">
-                <div className="space-y-4 lg:space-y-6 text-center lg:text-left">
-                  <div className="inline-block px-5 py-2 bg-green-50 text-green-700 text-[10px] lg:text-[11px] font-black uppercase tracking-widest rounded-full">Overview</div>
-                  <h2 className="text-3xl sm:text-5xl lg:text-8xl font-black text-gray-950 tracking-tighter leading-tight lg:leading-[0.85]">Ubumenyi <br /><span className="gradient-text">buzakuraho.</span></h2>
+          <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000 space-y-32">
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32 items-center">
+              <div className="space-y-12">
+                <div className="space-y-6">
+                  <div className="inline-flex items-center space-x-3 px-5 py-2 bg-blue-50 text-blue-600 rounded-full">
+                    <Zap size={18} className="animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Industry Pulse 2024</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-6xl lg:text-9xl font-black text-gray-950 tracking-tighter leading-[0.85]">Ejo Hazaza <br /><span className="gradient-text">Hatangira None.</span></h2>
                 </div>
-                <p className="text-base lg:text-2xl text-gray-500 font-semibold leading-relaxed text-center lg:text-left px-4 lg:px-0">Iyi gahunda yateguwe kugira ngo umunyeshuri asohoke ari impuguke yuzuye, ifite ubumenyi ngiro bukenewe mu Rwanda no mu mahanga.</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 px-4 lg:px-0">
+                <p className="text-lg lg:text-3xl text-gray-500 font-semibold leading-relaxed">
+                  Garden TVET yateguye uyu mwuga mu buryo buhuza amasomo yo mu ishuri n'ibikenerwa ku isoko ry'umurimo rigezweho.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {trade.careerProspects.map((career, i) => (
-                    <div key={i} className="flex items-center space-x-4 p-5 lg:p-8 bg-gray-50 rounded-2xl lg:rounded-[3rem] border border-gray-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all group">
-                       <div className="w-10 h-10 lg:w-14 lg:h-14 bg-white rounded-xl flex items-center justify-center text-green-600 shadow-sm"><Briefcase size={20} /></div>
-                       <span className="text-sm lg:text-xl font-black text-gray-800 leading-tight">{career}</span>
+                    <div key={i} className="flex items-center space-x-5 p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100 hover:bg-white hover:shadow-2xl hover:-translate-y-2 transition-all group">
+                       <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-green-600 shadow-sm border border-gray-50 group-hover:bg-green-600 group-hover:text-white transition-all">
+                          <Briefcase size={24} />
+                       </div>
+                       <span className="text-xl lg:text-2xl font-black text-gray-950 leading-tight">{career}</span>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="bg-white p-6 lg:p-16 rounded-[2.5rem] lg:rounded-[6rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] border border-gray-50 h-[380px] sm:h-[500px] lg:h-[700px] relative">
-                  <div className="absolute top-8 left-8 lg:top-16 lg:left-16 z-10 space-y-1">
-                    <p className="text-[8px] lg:text-[11px] font-black text-gray-400 uppercase tracking-widest">Analytics</p>
-                    <p className="text-base lg:text-3xl font-black text-gray-900 tracking-tighter leading-none">Skill Strength Map</p>
-                  </div>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="75%" data={skillData}>
-                      <PolarGrid stroke="#f1f5f9" strokeWidth={2} />
-                      <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 900 }} />
-                      <Radar name="Skills" dataKey="A" stroke="#16a34a" strokeWidth={4} fill="#22c55e" fillOpacity={0.4} />
-                    </RadarChart>
-                  </ResponsiveContainer>
+              
+              <div className="relative group">
+                 <div className="absolute inset-0 bg-green-500/10 blur-[120px] rounded-full group-hover:bg-green-500/20 transition-all"></div>
+                 <div className="relative bg-white p-10 lg:p-20 rounded-[4rem] lg:rounded-[6rem] shadow-2xl border border-gray-50 h-[400px] lg:h-[700px]">
+                    <div className="absolute top-12 left-12 space-y-2">
+                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Skill Matrix V1.0</p>
+                       <h3 className="text-3xl font-black text-gray-950 tracking-tighter">Competency Distribution</h3>
+                    </div>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={skillData}>
+                        <PolarGrid stroke="#f1f5f9" strokeWidth={2} />
+                        <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 900 }} />
+                        <Radar name="Skills" dataKey="A" stroke="#16a34a" strokeWidth={5} fill="#22c55e" fillOpacity={0.6} />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                 </div>
               </div>
+            </section>
+
+            {/* Powerful Stats/Benefits Grid */}
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               {[
+                 { icon: Award, title: "Double Certification", desc: "Get RTB and Garden Industry awards.", color: "text-blue-500" },
+                 { icon: Users, title: "Direct Internship", desc: "Connect with our 50+ industry partners.", color: "text-green-500" },
+                 { icon: Lightbulb, title: "Innovation Lab", desc: "24/7 access to high-end prototyping tools.", color: "text-orange-500" },
+               ].map((item, i) => (
+                 <div key={i} className="p-12 bg-white rounded-[3.5rem] border border-gray-100 shadow-lg hover:shadow-2xl transition-all space-y-8">
+                    <div className={`w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center ${item.color}`}><item.icon size={36} /></div>
+                    <div className="space-y-3">
+                       <h4 className="text-3xl font-black tracking-tighter">{item.title}</h4>
+                       <p className="text-lg text-gray-500 font-bold leading-relaxed">{item.desc}</p>
+                    </div>
+                 </div>
+               ))}
             </section>
           </div>
         )}
 
-        {/* Deep Dive / Curriculum Tab */}
+        {/* Deep Dive / Curriculum */}
         {activeTab === 'deepdive' && (
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 space-y-12">
-             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000 space-y-16">
+             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {trade.levels.map((level) => (
                   <button 
                     key={level.id}
                     onClick={() => setSelectedLevel(level.id)}
-                    className={`p-8 lg:p-12 text-left rounded-[2rem] lg:rounded-[3rem] transition-all border-4 ${
+                    className={`p-10 lg:p-14 text-left rounded-[3rem] transition-all border-4 relative overflow-hidden group ${
                       selectedLevel === level.id 
-                      ? 'bg-gray-950 text-white border-green-500 shadow-2xl' 
-                      : 'bg-white text-gray-900 border-gray-50 hover:border-gray-200'
+                      ? 'bg-gray-950 text-white border-green-500 shadow-2xl scale-[1.02]' 
+                      : 'bg-white text-gray-950 border-gray-50 hover:border-gray-200'
                     }`}
                   >
-                    <p className="text-[10px] font-black uppercase tracking-widest mb-4 opacity-60">Year of Study</p>
-                    <h4 className="text-2xl lg:text-4xl font-black tracking-tighter mb-4">{level.name}</h4>
-                    <p className={`text-sm lg:text-lg font-semibold leading-relaxed ${selectedLevel === level.id ? 'text-gray-400' : 'text-gray-500'}`}>
-                      {level.description}
-                    </p>
+                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                       <GraduationCap size={80} />
+                    </div>
+                    <div className="relative z-10">
+                       <p className="text-[10px] font-black uppercase tracking-widest mb-6 opacity-60">Academic Pathway</p>
+                       <h4 className="text-3xl lg:text-5xl font-black tracking-tighter mb-6">{level.name}</h4>
+                       <p className={`text-lg lg:text-xl font-bold leading-relaxed ${selectedLevel === level.id ? 'text-gray-400' : 'text-gray-500'}`}>
+                         {level.description}
+                       </p>
+                    </div>
                   </button>
                 ))}
              </div>
+
              {selectedLevel && (
-               <div className="bg-gray-50 p-8 lg:p-20 rounded-[3rem] lg:rounded-[6rem] space-y-12 animate-in fade-in duration-500">
-                  <div className="flex items-center justify-between">
-                     <h5 className="text-3xl lg:text-6xl font-black tracking-tighter">Core Modules</h5>
-                     <div className="w-16 h-16 lg:w-24 lg:h-24 bg-white rounded-3xl flex items-center justify-center text-green-600 shadow-xl">
-                        <BookOpen size={40} />
+               <div className="bg-gray-50 p-12 lg:p-24 rounded-[4rem] lg:rounded-[6rem] space-y-16 border border-gray-100 animate-in fade-in zoom-in duration-500">
+                  <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
+                     <div className="space-y-4">
+                        <h5 className="text-4xl lg:text-7xl font-black tracking-tighter">Core Modules</h5>
+                        <p className="text-xl text-gray-400 font-bold italic">"Practical competency benchmarks for Level {selectedLevel.slice(-1)}."</p>
+                     </div>
+                     <div className="flex -space-x-4">
+                        {[1, 2, 3, 4].map(i => (
+                          <div key={i} className="w-16 h-16 rounded-full border-4 border-white bg-gray-200 overflow-hidden shadow-lg">
+                             <img src={`https://i.pravatar.cc/150?u=${i + 10}`} alt="" />
+                          </div>
+                        ))}
+                        <div className="w-16 h-16 rounded-full border-4 border-white bg-gray-950 flex items-center justify-center text-white text-xs font-black shadow-lg">+42</div>
                      </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-8">
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
                      {trade.coreModules.map((module, idx) => (
-                       <div key={idx} className="flex items-center space-x-6 p-6 lg:p-10 bg-white rounded-[1.5rem] lg:rounded-[2.5rem] shadow-sm border border-white">
-                          <span className="text-3xl lg:text-5xl font-black text-gray-100">0{idx + 1}</span>
-                          <span className="text-base lg:text-2xl font-black text-gray-900">{module}</span>
+                       <div key={idx} className="group flex items-center justify-between p-8 lg:p-12 bg-white rounded-[2.5rem] lg:rounded-[3.5rem] shadow-sm border border-transparent hover:border-green-500 hover:shadow-2xl transition-all">
+                          <div className="flex items-center space-x-8">
+                             <span className="text-4xl lg:text-6xl font-black text-gray-100 group-hover:text-green-500 transition-colors">0{idx + 1}</span>
+                             <span className="text-xl lg:text-3xl font-black text-gray-900 leading-tight">{module}</span>
+                          </div>
+                          <CheckCircle2 size={32} className="text-gray-50 opacity-0 group-hover:opacity-100 group-hover:text-green-500 transition-all" />
                        </div>
                      ))}
                   </div>
@@ -174,69 +244,116 @@ const TradeDetail: React.FC = () => {
           </div>
         )}
 
-        {/* Workshop Tab */}
-        {activeTab === 'ibikoresho' && (
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 px-4 lg:px-0">
-            {trade.tools.map((tool, i) => (
-              <div key={i} className="p-8 bg-white rounded-[2.5rem] border border-gray-100 shadow-lg hover:shadow-2xl transition-all space-y-6">
-                 <div className="w-12 h-12 lg:w-16 lg:h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-400"><Wrench size={24} /></div>
-                 <div className="space-y-2">
-                    <p className="text-xl lg:text-2xl font-black text-gray-900 leading-tight">{tool.name}</p>
-                    <p className="text-xs lg:text-sm font-bold text-gray-500 leading-relaxed">{tool.description}</p>
-                 </div>
-              </div>
-            ))}
+        {/* Projects Tab */}
+        {activeTab === 'imishinga' && (
+          <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000 space-y-24">
+             <div className="max-w-4xl space-y-6">
+                <h3 className="text-5xl lg:text-8xl font-black tracking-tighter leading-none">Imishinga <br /><span className="gradient-text">y'indashyikirwa.</span></h3>
+                <p className="text-xl lg:text-3xl text-gray-500 font-bold">Uburyo abanyeshuri bacu bishyira mu bikorwa ibyo bize binyuze mu gukemura ibibazo bifatika.</p>
+             </div>
+
+             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+                {projects.map((project) => (
+                  <div key={project.id} className="group bg-white rounded-[3.5rem] overflow-hidden border border-gray-100 shadow-lg hover:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] hover:-translate-y-4 transition-all">
+                     <div className="h-72 overflow-hidden relative">
+                        <img src={project.image} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000" alt={project.title} />
+                        <div className="absolute top-6 left-6 px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest text-gray-950">{project.category}</div>
+                     </div>
+                     <div className="p-10 space-y-6">
+                        <h4 className="text-3xl font-black tracking-tighter leading-tight">{project.title}</h4>
+                        <div className="flex items-center justify-between border-t border-gray-50 pt-8">
+                           <div className="flex items-center space-x-3">
+                              <div className="w-10 h-10 rounded-full bg-gray-100 overflow-hidden"><img src={`https://i.pravatar.cc/150?u=${project.id}`} alt="" /></div>
+                              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">{project.lead}</p>
+                           </div>
+                           <button className="p-4 bg-gray-50 rounded-2xl text-gray-400 group-hover:bg-green-600 group-hover:text-white transition-all"><ExternalLink size={20} /></button>
+                        </div>
+                     </div>
+                  </div>
+                ))}
+             </div>
+             <div className="p-16 bg-gray-950 rounded-[4rem] text-center space-y-8 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-10 opacity-10"><Terminal size={120} className="text-white" /></div>
+                <h4 className="text-3xl lg:text-5xl font-black text-white tracking-tighter relative z-10">Ufite umushinga wifuza ko twafatanyamo?</h4>
+                <p className="text-lg lg:text-2xl text-gray-500 font-bold relative z-10 max-w-2xl mx-auto">Ishuri ryacu rifunguye imiryango ku bigo n'abashoramari bifuza gukoresha ubumenyi bw'abanyeshuri bacu.</p>
+                <button className="px-12 py-6 bg-white text-gray-950 rounded-[2rem] font-black text-lg hover:bg-green-600 hover:text-white transition-all relative z-10">Tanga Igitekerezo</button>
+             </div>
           </div>
         )}
 
         {/* Gallery Tab */}
         {activeTab === 'amafoto' && (
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 px-4 lg:px-0">
-            {trade.gallery.map((img, i) => (
-              <div key={i} className="relative group rounded-3xl lg:rounded-[3rem] overflow-hidden shadow-xl break-inside-avoid border-4 border-white">
-                 <img src={img.url} className="w-full object-cover" alt={img.caption} />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 lg:p-10 flex flex-col justify-end">
-                    <p className="text-white font-black text-sm lg:text-lg leading-tight">{img.caption}</p>
-                 </div>
-              </div>
-            ))}
+          <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000 space-y-24">
+             <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
+                {trade.gallery.map((img, i) => (
+                  <div key={i} className="relative group rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white break-inside-avoid hover:shadow-green-500/20 transition-all">
+                     <img src={img.url} className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-1000" alt="" />
+                     <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-10 flex flex-col justify-end">
+                        <p className="text-white font-black text-xl leading-tight">{img.caption}</p>
+                     </div>
+                  </div>
+                ))}
+             </div>
           </div>
         )}
 
         {/* Quiz Tab */}
         {activeTab === 'quiz' && (
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 max-w-4xl mx-auto py-12 lg:py-24 space-y-12 text-center">
+          <div className="animate-in fade-in zoom-in duration-700 max-w-5xl mx-auto py-24 space-y-16 text-center">
              {!quizFinished ? (
-               <>
+               <div className="space-y-16">
                  <div className="space-y-6">
-                    <h3 className="text-4xl lg:text-7xl font-black tracking-tighter">Isuzume Umwuga.</h3>
-                    <p className="text-lg lg:text-2xl text-gray-500 font-semibold max-w-2xl mx-auto">Simbuka mu isuzuma rito urebe niba uyu mwuga ujuganye n'impano yawe.</p>
+                    <h3 className="text-5xl lg:text-9xl font-black tracking-tighter">Isuzume Umwuga.</h3>
+                    <p className="text-xl lg:text-4xl text-gray-500 font-bold max-w-3xl mx-auto italic">"Simbuka mu isuzuma rito urebe niba uyu mwuga ujuganye n'impano yawe ya gihanga."</p>
                  </div>
-                 <div className="p-10 lg:p-20 bg-gray-50 rounded-[3rem] lg:rounded-[5rem] space-y-10 border border-gray-100">
-                    <p className="text-xl lg:text-4xl font-black text-gray-900 leading-tight">"Ese ukunda gukemura ibibazo bikomeye ukoresheje mudasobwa cyangwa ibikoresho bifatika?"</p>
+                 <div className="p-16 lg:p-28 bg-gray-50 rounded-[5rem] lg:rounded-[8rem] space-y-12 border border-gray-100 shadow-inner relative overflow-hidden">
+                    <div className="absolute top-10 left-10 p-4 bg-white rounded-2xl shadow-sm text-green-500"><Terminal size={32} /></div>
+                    <p className="text-2xl lg:text-5xl font-black text-gray-950 leading-tight">"Ese ukunda gukemura ibibazo bikomeye ukoresheje mudasobwa cyangwa ibikoresho bifatika?"</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-6">
-                       <button onClick={() => setQuizFinished(true)} className="px-12 py-6 lg:px-20 lg:py-8 bg-green-600 text-white rounded-[2rem] font-black text-lg lg:text-2xl shadow-xl hover:-translate-y-1 transition-all">Cyane cyane</button>
-                       <button onClick={() => setQuizFinished(true)} className="px-12 py-6 lg:px-20 lg:py-8 bg-white border-2 border-gray-200 text-gray-900 rounded-[2rem] font-black text-lg lg:text-2xl shadow-sm hover:border-gray-900 transition-all">Biterwa na moko</button>
+                       <button onClick={() => setQuizFinished(true)} className="px-16 py-8 bg-green-600 text-white rounded-[2.5rem] font-black text-xl lg:text-3xl shadow-2xl hover:bg-green-700 transition-all flex items-center justify-center space-x-4">
+                          <span>Yego, Cyane</span>
+                          <ArrowUpRight size={24} />
+                       </button>
+                       <button onClick={() => setQuizFinished(true)} className="px-16 py-8 bg-white border-4 border-gray-100 text-gray-950 rounded-[2.5rem] font-black text-xl lg:text-3xl hover:border-gray-950 transition-all">Biterwa n'igihe</button>
                     </div>
                  </div>
-               </>
+               </div>
              ) : (
-               <div className="space-y-10 animate-in zoom-in duration-700">
-                  <div className="w-24 h-24 lg:w-40 lg:h-40 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto shadow-inner"><Star size={64} fill="currentColor" /></div>
-                  <h3 className="text-4xl lg:text-7xl font-black tracking-tighter">Urashoboye!</h3>
-                  <p className="text-lg lg:text-2xl text-gray-500 font-semibold">Impano yawe ihuye neza na {trade.name}. Turagutegereje!</p>
-                  <button onClick={() => setQuizFinished(false)} className="px-10 py-5 bg-gray-950 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-green-600 transition-all">Ongera ugerageze</button>
+               <div className="space-y-12">
+                  <div className="w-32 h-32 lg:w-48 lg:h-48 bg-green-100 text-green-600 rounded-[3rem] flex items-center justify-center mx-auto shadow-inner animate-bounce"><Star size={80} fill="currentColor" /></div>
+                  <div className="space-y-4">
+                    <h3 className="text-6xl lg:text-9xl font-black tracking-tighter">Urashoboye!</h3>
+                    <p className="text-2xl lg:text-4xl text-gray-500 font-bold">Impano yawe ihuye neza na {trade.name}. <br />Inzugi za Garden TVET ziragufunguriye!</p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row justify-center gap-6">
+                    <button className="px-14 py-6 bg-gray-950 text-white rounded-[2rem] font-black text-xl hover:bg-green-600 transition-all">Tanga Application</button>
+                    <button onClick={() => setQuizFinished(false)} className="px-14 py-6 bg-gray-100 text-gray-500 rounded-[2rem] font-black text-xl hover:bg-gray-200 transition-all">Ongera ugerageze</button>
+                  </div>
                </div>
              )}
           </div>
         )}
-
       </div>
       
-      {/* Mobile Context Button */}
-      <button className="fixed bottom-6 right-6 lg:hidden w-16 h-16 bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center z-[80] active:scale-90 transition-transform">
-         <Activity size={28} />
-      </button>
+      {/* Dynamic Action Bar */}
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-4xl bg-gray-950/80 backdrop-blur-3xl p-4 lg:p-6 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/10 flex items-center justify-between">
+         <div className="hidden sm:flex items-center space-x-5 px-6">
+            <div className="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center text-white font-black">?</div>
+            <div>
+               <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Questions?</p>
+               <p className="text-sm font-bold text-white">Talk to an Advisor</p>
+            </div>
+         </div>
+         <div className="flex items-center space-x-3 w-full sm:w-auto">
+            <button className="flex-1 sm:flex-none px-10 py-5 bg-white text-gray-950 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-green-600 hover:text-white transition-all">
+               Ibisabwa
+            </button>
+            <button className="flex-1 sm:flex-none px-10 py-5 bg-green-600 text-white rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-green-700 transition-all flex items-center justify-center space-x-3">
+               <span>Iyandikishe</span>
+               <ChevronRight size={18} />
+            </button>
+         </div>
+      </div>
     </div>
   );
 };
